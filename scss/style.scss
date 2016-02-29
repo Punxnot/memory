@@ -1,0 +1,77 @@
+body{
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+ul, ol{
+  list-style: none;
+}
+*{
+  box-sizing: border-box;
+}
+.clearfix::after{
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.sample-card-container{
+  display: none;
+}
+.cards-container{
+  position: relative;
+  width: 260px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+.card{
+  float: left;
+  width: 50px;
+  height: 100px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  &:nth-of-type(4n){
+    margin-right: 0;
+  }
+}
+.message-container{
+  position: absolute;
+  left: -150px;
+  top: 0;
+  font-size: 20px;
+  color: green;
+}
+
+.flip-container{
+  perspective: 1000;
+  visibility: visible;
+}
+.flip-container.animate .flipper{
+  transform: rotateY(180deg);
+}
+.flipper{
+  transition: transform .3s;
+  transform-style: preserve-3d;
+  position: relative;
+  height: 100px;
+}
+.front, .back {
+  width: 50px;
+  height: 100px;
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.front {
+  z-index: 2;
+  background: url(http://images.vector-images.com/clipart/s/181/eg0034.jpg);
+  transform: rotateY(0deg);
+}
+.back {
+  transform: rotateY(180deg);
+  background-color: #eee;
+  text-align: center;
+  font-size: 22px;
+  line-height: 100px;
+}
