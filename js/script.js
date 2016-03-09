@@ -56,7 +56,7 @@
       i = newList[k];
       cln = card.cloneNode(true);
       cln.dataset.number = i;
-      cln.querySelector(".back").innerHTML = cln.dataset.number;
+      cln.querySelector(".back").style.backgroundImage = "url(img/" + i + ".png)";
       results.push(cardsContainer.appendChild(cln));
     }
     return results;

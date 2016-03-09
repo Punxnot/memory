@@ -1,7 +1,15 @@
+@font-face {
+  font-family: Cake;
+  src: url(../fonts/cake.ttf);
+}
+
+$cardWidth: 70px;
+$cardHeight: 124px;
+
 body{
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
+  font-family: Cake, "Comic Sans MS", sans-serif;
 }
 ul, ol{
   list-style: none;
@@ -20,14 +28,14 @@ ul, ol{
 }
 .cards-container{
   position: relative;
-  width: 260px;
+  width: $cardWidth * 4 + 20px * 3;
   margin: 0 auto;
   margin-top: 20px;
 }
 .card{
   float: left;
-  width: 50px;
-  height: 100px;
+  width: $cardWidth;
+  height: $cardHeight;
   margin-right: 20px;
   margin-bottom: 20px;
   &:nth-of-type(4n){
@@ -36,10 +44,10 @@ ul, ol{
 }
 .message-container{
   position: absolute;
-  left: -150px;
+  left: -160px;
   top: 0;
-  font-size: 20px;
-  color: green;
+  font-size: 30px;
+  color: #16829e;
 }
 
 .flip-container{
@@ -53,11 +61,11 @@ ul, ol{
   transition: transform .3s;
   transform-style: preserve-3d;
   position: relative;
-  height: 100px;
+  height: $cardHeight;
 }
 .front, .back {
-  width: 50px;
-  height: 100px;
+  width: $cardWidth;
+  height: $cardHeight;
   backface-visibility: hidden;
   position: absolute;
   top: 0;
@@ -65,7 +73,7 @@ ul, ol{
 }
 .front {
   z-index: 2;
-  background: url(http://images.vector-images.com/clipart/s/181/eg0034.jpg);
+  background: url(../img/pattern.jpg);
   transform: rotateY(0deg);
 }
 .back {
@@ -73,5 +81,8 @@ ul, ol{
   background-color: #eee;
   text-align: center;
   font-size: 22px;
-  line-height: 100px;
+  line-height: $cardHeight;
+  background-size: 90%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
