@@ -4,6 +4,8 @@ endList = list1.concat(list2)
 cardsContainer = document.getElementById("cardsContainer")
 allCards = []
 messageContainer = document.getElementById("messageContainer")
+botsScoreContainer = document.getElementById("botsScore")
+playersScoreContainer = document.getElementById("playersScore")
 exposed = []
 for i in endList
   exposed.push(false)
@@ -12,6 +14,7 @@ card1 = 33
 card2 = 33
 blub = new Audio('blub.wav')
 yeah = new Audio('yeah.wav')
+boo = new Audio('boo.wav')
 playersTurn = true
 playersScore = 0
 botsScore = 0
@@ -47,20 +50,21 @@ window.onload = ->
     i.classList.add("closed-card")
   allCardsList = Array.prototype.slice.call(allCards, 0)
   messageContainer.innerHTML = "Your turn"
+  playersScoreContainer.innerHTML = "Your score: " + playersScore
+  botsScoreContainer.innerHTML = "Bot's score: " + botsScore
 
   # Bot
   botPlay = ->
-    messageContainer.innerHTML = "Bot's turn"
     closedCards = document.querySelectorAll(".closed-card")
     closedCardsList = Array.prototype.slice.call(closedCards, 0)
     if closedCards.length > 0
+      messageContainer.innerHTML = "Bot's turn"
       botNum = getRandom(0, closedCards.length)
       cardToClick = closedCardsList[botNum]
       if state == 1
         for i in closedCardsList
           if (i.dataset.number == allCardsList[card1].dataset.number) && (i.dataset.times > 0)
             cardToClick = i
-            console.log "Seen this card!"
       botNum = getRandom(0, closedCards.length)
       cardToClick.querySelector(".front").click()
 
@@ -113,6 +117,16 @@ window.onload = ->
               playersScore += 1
             else
               botsScore += 1
-            # console.log "playersScore: " + playersScore
-            # console.log "botsScore: " + botsScore
+            playersScoreContainer.innerHTML = "Your score: " + playersScore
+            botsScoreContainer.innerHTML = "Bot's score: " + botsScore
+    if (false not in exposed)
+      if botsScore > playersScore
+        messageContainer.innerHTML = "Bot wins"
+        boo.play()
+      else if playersScore > botsScore
+        messageContainer.innerHTML = "You win"
+        yeah.play()
+      else
+        messageContainer.innerHTML = "That's a tie!"
+        yeah.play()
   , false)

@@ -1,5 +1,6 @@
 (function() {
-  var allCards, blub, botsScore, card1, card2, cardsContainer, createCards, endList, exposed, getRandom, i, j, len, list1, list2, messageContainer, myInterval, newList, playersScore, playersTurn, shuffle, state, yeah;
+  var allCards, blub, boo, botsScore, botsScoreContainer, card1, card2, cardsContainer, createCards, endList, exposed, getRandom, i, j, len, list1, list2, messageContainer, myInterval, newList, playersScore, playersScoreContainer, playersTurn, shuffle, state, yeah,
+    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   list1 = [0, 1, 2, 3, 4, 5, 6, 7];
 
@@ -12,6 +13,10 @@
   allCards = [];
 
   messageContainer = document.getElementById("messageContainer");
+
+  botsScoreContainer = document.getElementById("botsScore");
+
+  playersScoreContainer = document.getElementById("playersScore");
 
   exposed = [];
 
@@ -29,6 +34,8 @@
   blub = new Audio('blub.wav');
 
   yeah = new Audio('yeah.wav');
+
+  boo = new Audio('boo.wav');
 
   playersTurn = true;
 
@@ -81,12 +88,14 @@
     }
     allCardsList = Array.prototype.slice.call(allCards, 0);
     messageContainer.innerHTML = "Your turn";
+    playersScoreContainer.innerHTML = "Your score: " + playersScore;
+    botsScoreContainer.innerHTML = "Bot's score: " + botsScore;
     botPlay = function() {
       var botNum, cardToClick, closedCards, closedCardsList, l, len2;
-      messageContainer.innerHTML = "Bot's turn";
       closedCards = document.querySelectorAll(".closed-card");
       closedCardsList = Array.prototype.slice.call(closedCards, 0);
       if (closedCards.length > 0) {
+        messageContainer.innerHTML = "Bot's turn";
         botNum = getRandom(0, closedCards.length);
         cardToClick = closedCardsList[botNum];
         if (state === 1) {
@@ -94,7 +103,6 @@
             i = closedCardsList[l];
             if ((i.dataset.number === allCardsList[card1].dataset.number) && (i.dataset.times > 0)) {
               cardToClick = i;
-              console.log("Seen this card!");
             }
           }
         }
@@ -116,7 +124,7 @@
           blub.play();
           if (state === 0) {
             card1 = ind;
-            return state = 1;
+            state = 1;
           } else if (state === 1) {
             card2 = ind;
             state = 0;
@@ -136,7 +144,7 @@
               if (playersTurn === true) {
                 playersTurn = false;
                 cardsContainer.classList.add("not-clickable");
-                return myInterval = setInterval(function() {
+                myInterval = setInterval(function() {
                   if (!playersTurn) {
                     return botPlay();
                   }
@@ -145,18 +153,32 @@
                 playersTurn = true;
                 cardsContainer.classList.remove("not-clickable");
                 clearInterval(myInterval);
-                return setTimeout(function() {
+                setTimeout(function() {
                   return messageContainer.innerHTML = "Your turn";
                 }, 500);
               }
             } else {
               if (playersTurn) {
-                return playersScore += 1;
+                playersScore += 1;
               } else {
-                return botsScore += 1;
+                botsScore += 1;
               }
+              playersScoreContainer.innerHTML = "Your score: " + playersScore;
+              botsScoreContainer.innerHTML = "Bot's score: " + botsScore;
             }
           }
+        }
+      }
+      if ((indexOf.call(exposed, false) < 0)) {
+        if (botsScore > playersScore) {
+          messageContainer.innerHTML = "Bot wins";
+          return boo.play();
+        } else if (playersScore > botsScore) {
+          messageContainer.innerHTML = "You win";
+          return yeah.play();
+        } else {
+          messageContainer.innerHTML = "That's a tie!";
+          return yeah.play();
         }
       }
     }, false);

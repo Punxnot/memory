@@ -5,7 +5,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: Cake, "Comic Sans MS", sans-serif;
+  font-family: Arial, sans-serif;
 }
 
 ul, ol {
@@ -26,7 +26,18 @@ ul, ol {
   display: none;
 }
 
+.logo {
+  font-family: Cake, "Comic Sans MS", sans-serif;
+  font-size: 34px;
+}
+
+.game-container {
+  text-align: center;
+}
+
 .cards-container {
+  display: inline-block;
+  vertical-align: top;
   position: relative;
   width: 340px;
   margin: 0 auto;
@@ -45,11 +56,25 @@ ul, ol {
 }
 
 .message-container {
-  position: absolute;
-  left: -160px;
-  top: 0;
-  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.text-container {
+  display: inline-block;
+  vertical-align: top;
+  width: 250px;
+  padding: 20px;
+  text-align: center;
+  font-size: 24px;
   color: #16829e;
+}
+.text-container p {
+  font-size: 14px;
+}
+
+.players-score,
+.bots-score {
+  font-size: 18px;
 }
 
 .flip-container {
