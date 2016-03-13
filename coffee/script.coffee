@@ -90,6 +90,7 @@ window.onload = ->
     card2 = 33
     playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
     botsScoreContainer.innerHTML = "Счёт бота: " + botsScore
+    messageContainer.innerHTML = "Ваша очередь"
   )
 
   cardsContainer.addEventListener("click", (e)->

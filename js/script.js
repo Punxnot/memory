@@ -132,7 +132,8 @@
       card1 = 33;
       card2 = 33;
       playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
-      return botsScoreContainer.innerHTML = "Счёт бота: " + botsScore;
+      botsScoreContainer.innerHTML = "Счёт бота: " + botsScore;
+      return messageContainer.innerHTML = "Ваша очередь";
     });
     return cardsContainer.addEventListener("click", function(e) {
       var card, closeCards, ind, showMessage;
