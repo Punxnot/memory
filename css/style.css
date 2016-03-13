@@ -102,3 +102,7 @@ ul, ol {
   background-repeat: no-repeat;
   background-position: center;
 }
+
+.not-clickable {
+  pointer-events: none;
+}
