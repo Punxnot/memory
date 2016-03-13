@@ -88,6 +88,8 @@ window.onload = ->
     state = 0
     card1 = 33
     card2 = 33
+    playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
+    botsScoreContainer.innerHTML = "Счёт бота: " + botsScore
   )
 
   cardsContainer.addEventListener("click", (e)->

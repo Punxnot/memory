@@ -130,7 +130,9 @@
       cardsContainer.classList.remove("not-clickable");
       state = 0;
       card1 = 33;
-      return card2 = 33;
+      card2 = 33;
+      playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
+      return botsScoreContainer.innerHTML = "Счёт бота: " + botsScore;
     });
     return cardsContainer.addEventListener("click", function(e) {
       var card, closeCards, ind, showMessage;
