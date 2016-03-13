@@ -6,9 +6,8 @@ allCards = []
 messageContainer = document.getElementById("messageContainer")
 botsScoreContainer = document.getElementById("botsScore")
 playersScoreContainer = document.getElementById("playersScore")
+startBtn = document.getElementById("startBtn")
 exposed = []
-for i in endList
-  exposed.push(false)
 state = 0
 card1 = 33
 card2 = 33
@@ -42,6 +41,8 @@ createCards = ->
     cln.dataset.number = i
     cln.querySelector(".back").style.backgroundImage = "url(img/#{i}.png)"
     cardsContainer.appendChild(cln)
+  for i in endList
+    exposed.push(false)
 
 window.onload = ->
   createCards()
@@ -49,16 +50,16 @@ window.onload = ->
   for i in allCards
     i.classList.add("closed-card")
   allCardsList = Array.prototype.slice.call(allCards, 0)
-  messageContainer.innerHTML = "Your turn"
-  playersScoreContainer.innerHTML = "Your score: " + playersScore
-  botsScoreContainer.innerHTML = "Bot's score: " + botsScore
+  messageContainer.innerHTML = "Ваша очередь"
+  playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
+  botsScoreContainer.innerHTML = "Счёт бота: " + botsScore
 
   # Bot
   botPlay = ->
     closedCards = document.querySelectorAll(".closed-card")
     closedCardsList = Array.prototype.slice.call(closedCards, 0)
     if closedCards.length > 0
-      messageContainer.innerHTML = "Bot's turn"
+      messageContainer.innerHTML = "Очередь бота"
       botNum = getRandom(0, closedCards.length)
       cardToClick = closedCardsList[botNum]
       if state == 1
@@ -67,6 +68,26 @@ window.onload = ->
             cardToClick = i
       botNum = getRandom(0, closedCards.length)
       cardToClick.querySelector(".front").click()
+
+  startBtn.addEventListener("click", ->
+    cardsContainer.innerHTML = ''
+    exposed = []
+    newList = shuffle(endList)
+    createCards()
+    allCards = cardsContainer.querySelectorAll(".card")
+    for i in allCards
+      i.classList.add("closed-card")
+    allCardsList = Array.prototype.slice.call(allCards, 0)
+    playersTurn = true
+    playersScore = 0
+    botsScore = 0
+    clearInterval(myInterval)
+    # clearTimeout(closeCards)
+    # clearTimeout(showMessage)
+    state = 0
+    card1 = 33
+    card2 = 33
+  )
 
   cardsContainer.addEventListener("click", (e)->
     if e.target.parentNode.parentNode.parentNode.classList.contains("card")
@@ -92,7 +113,7 @@ window.onload = ->
             allCardsList[card1].dataset.open = false
             allCardsList[card2].dataset.open = false
             allCardsList[ind].dataset.open = false
-            setTimeout(->
+            closeCards = setTimeout(->
               allCardsList[card1].querySelector(".flip-container").classList.remove("animate")
               allCardsList[card2].querySelector(".flip-container").classList.remove("animate")
               allCardsList[card1].classList.add("closed-card")
@@ -109,24 +130,24 @@ window.onload = ->
               playersTurn = true
               cardsContainer.classList.remove("not-clickable")
               clearInterval(myInterval)
-              setTimeout(->
-                messageContainer.innerHTML = "Your turn"
+              showMessage = setTimeout(->
+                messageContainer.innerHTML = "Ваша очередь"
               , 500)
           else
             if playersTurn
               playersScore += 1
             else
               botsScore += 1
-            playersScoreContainer.innerHTML = "Your score: " + playersScore
-            botsScoreContainer.innerHTML = "Bot's score: " + botsScore
+            playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
+            botsScoreContainer.innerHTML = "Счёт бота: " + botsScore
     if (false not in exposed)
       if botsScore > playersScore
-        messageContainer.innerHTML = "Bot wins"
+        messageContainer.innerHTML = "Выиграл бот"
         boo.play()
       else if playersScore > botsScore
-        messageContainer.innerHTML = "You win"
+        messageContainer.innerHTML = "Вы выиграли"
         yeah.play()
       else
-        messageContainer.innerHTML = "That's a tie!"
+        messageContainer.innerHTML = "Ничья!"
         yeah.play()
   , false)

@@ -1,5 +1,5 @@
 (function() {
-  var allCards, blub, boo, botsScore, botsScoreContainer, card1, card2, cardsContainer, createCards, endList, exposed, getRandom, i, j, len, list1, list2, messageContainer, myInterval, newList, playersScore, playersScoreContainer, playersTurn, shuffle, state, yeah,
+  var allCards, blub, boo, botsScore, botsScoreContainer, card1, card2, cardsContainer, createCards, endList, exposed, getRandom, list1, list2, messageContainer, myInterval, newList, playersScore, playersScoreContainer, playersTurn, shuffle, startBtn, state, yeah,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   list1 = [0, 1, 2, 3, 4, 5, 6, 7];
@@ -18,12 +18,9 @@
 
   playersScoreContainer = document.getElementById("playersScore");
 
-  exposed = [];
+  startBtn = document.getElementById("startBtn");
 
-  for (j = 0, len = endList.length; j < len; j++) {
-    i = endList[j];
-    exposed.push(false);
-  }
+  exposed = [];
 
   state = 0;
 
@@ -65,42 +62,46 @@
   newList = shuffle(endList);
 
   createCards = function() {
-    var card, cln, k, len1, results;
+    var card, cln, i, j, k, len, len1, results;
     card = document.querySelector(".card");
-    results = [];
-    for (k = 0, len1 = newList.length; k < len1; k++) {
-      i = newList[k];
+    for (j = 0, len = newList.length; j < len; j++) {
+      i = newList[j];
       cln = card.cloneNode(true);
       cln.dataset.number = i;
       cln.querySelector(".back").style.backgroundImage = "url(img/" + i + ".png)";
-      results.push(cardsContainer.appendChild(cln));
+      cardsContainer.appendChild(cln);
+    }
+    results = [];
+    for (k = 0, len1 = endList.length; k < len1; k++) {
+      i = endList[k];
+      results.push(exposed.push(false));
     }
     return results;
   };
 
   window.onload = function() {
-    var allCardsList, botPlay, k, len1;
+    var allCardsList, botPlay, i, j, len;
     createCards();
     allCards = cardsContainer.querySelectorAll(".card");
-    for (k = 0, len1 = allCards.length; k < len1; k++) {
-      i = allCards[k];
+    for (j = 0, len = allCards.length; j < len; j++) {
+      i = allCards[j];
       i.classList.add("closed-card");
     }
     allCardsList = Array.prototype.slice.call(allCards, 0);
-    messageContainer.innerHTML = "Your turn";
-    playersScoreContainer.innerHTML = "Your score: " + playersScore;
-    botsScoreContainer.innerHTML = "Bot's score: " + botsScore;
+    messageContainer.innerHTML = "Ваша очередь";
+    playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
+    botsScoreContainer.innerHTML = "Счёт бота: " + botsScore;
     botPlay = function() {
-      var botNum, cardToClick, closedCards, closedCardsList, l, len2;
+      var botNum, cardToClick, closedCards, closedCardsList, k, len1;
       closedCards = document.querySelectorAll(".closed-card");
       closedCardsList = Array.prototype.slice.call(closedCards, 0);
       if (closedCards.length > 0) {
-        messageContainer.innerHTML = "Bot's turn";
+        messageContainer.innerHTML = "Очередь бота";
         botNum = getRandom(0, closedCards.length);
         cardToClick = closedCardsList[botNum];
         if (state === 1) {
-          for (l = 0, len2 = closedCardsList.length; l < len2; l++) {
-            i = closedCardsList[l];
+          for (k = 0, len1 = closedCardsList.length; k < len1; k++) {
+            i = closedCardsList[k];
             if ((i.dataset.number === allCardsList[card1].dataset.number) && (i.dataset.times > 0)) {
               cardToClick = i;
             }
@@ -110,8 +111,28 @@
         return cardToClick.querySelector(".front").click();
       }
     };
+    startBtn.addEventListener("click", function() {
+      var k, len1;
+      cardsContainer.innerHTML = '';
+      exposed = [];
+      newList = shuffle(endList);
+      createCards();
+      allCards = cardsContainer.querySelectorAll(".card");
+      for (k = 0, len1 = allCards.length; k < len1; k++) {
+        i = allCards[k];
+        i.classList.add("closed-card");
+      }
+      allCardsList = Array.prototype.slice.call(allCards, 0);
+      playersTurn = true;
+      playersScore = 0;
+      botsScore = 0;
+      clearInterval(myInterval);
+      state = 0;
+      card1 = 33;
+      return card2 = 33;
+    });
     return cardsContainer.addEventListener("click", function(e) {
-      var card, ind;
+      var card, closeCards, ind, showMessage;
       if (e.target.parentNode.parentNode.parentNode.classList.contains("card")) {
         card = e.target.parentNode.parentNode.parentNode;
         ind = allCardsList.indexOf(card);
@@ -135,7 +156,7 @@
               allCardsList[card1].dataset.open = false;
               allCardsList[card2].dataset.open = false;
               allCardsList[ind].dataset.open = false;
-              setTimeout(function() {
+              closeCards = setTimeout(function() {
                 allCardsList[card1].querySelector(".flip-container").classList.remove("animate");
                 allCardsList[card2].querySelector(".flip-container").classList.remove("animate");
                 allCardsList[card1].classList.add("closed-card");
@@ -153,8 +174,8 @@
                 playersTurn = true;
                 cardsContainer.classList.remove("not-clickable");
                 clearInterval(myInterval);
-                setTimeout(function() {
-                  return messageContainer.innerHTML = "Your turn";
+                showMessage = setTimeout(function() {
+                  return messageContainer.innerHTML = "Ваша очередь";
                 }, 500);
               }
             } else {
@@ -163,21 +184,21 @@
               } else {
                 botsScore += 1;
               }
-              playersScoreContainer.innerHTML = "Your score: " + playersScore;
-              botsScoreContainer.innerHTML = "Bot's score: " + botsScore;
+              playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
+              botsScoreContainer.innerHTML = "Счёт бота: " + botsScore;
             }
           }
         }
       }
       if ((indexOf.call(exposed, false) < 0)) {
         if (botsScore > playersScore) {
-          messageContainer.innerHTML = "Bot wins";
+          messageContainer.innerHTML = "Выиграл бот";
           return boo.play();
         } else if (playersScore > botsScore) {
-          messageContainer.innerHTML = "You win";
+          messageContainer.innerHTML = "Вы выиграли";
           return yeah.play();
         } else {
-          messageContainer.innerHTML = "That's a tie!";
+          messageContainer.innerHTML = "Ничья!";
           return yeah.play();
         }
       }

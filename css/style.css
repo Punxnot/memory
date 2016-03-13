@@ -72,6 +72,21 @@ ul, ol {
   font-size: 14px;
 }
 
+.btn {
+  border: none;
+  outline: none;
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #16829e;
+  color: white;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: #1ca7cb;
+}
+
 .players-score,
 .bots-score {
   font-size: 18px;
