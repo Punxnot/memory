@@ -1,5 +1,5 @@
 (function() {
-  var allCards, blub, card1, card2, cardsContainer, createCards, endList, exposed, getRandom, i, j, len, list1, list2, messageContainer, myInterval, newList, playersTurn, shuffle, state, turns, yeah;
+  var allCards, blub, botsScore, card1, card2, cardsContainer, createCards, endList, exposed, getRandom, i, j, len, list1, list2, messageContainer, myInterval, newList, playersScore, playersTurn, shuffle, state, yeah;
 
   list1 = [0, 1, 2, 3, 4, 5, 6, 7];
 
@@ -26,20 +26,22 @@
 
   card2 = 33;
 
-  turns = 0;
-
   blub = new Audio('blub.wav');
 
   yeah = new Audio('yeah.wav');
 
   playersTurn = true;
 
+  playersScore = 0;
+
+  botsScore = 0;
+
   myInterval = null;
 
   shuffle = function(array) {
     var currentIndex, randomIndex, temporaryValue;
     currentIndex = array.length;
-    while (0 !== currentIndex) {
+    while (currentIndex !== 0) {
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
       temporaryValue = array[currentIndex];
@@ -78,40 +80,46 @@
       i.classList.add("closed-card");
     }
     allCardsList = Array.prototype.slice.call(allCards, 0);
-    messageContainer.innerHTML = "Turns = " + turns;
+    messageContainer.innerHTML = "Your turn";
     botPlay = function() {
-      var botNum, closedCards, closedCardsList;
+      var botNum, cardToClick, closedCards, closedCardsList, l, len2;
+      messageContainer.innerHTML = "Bot's turn";
       closedCards = document.querySelectorAll(".closed-card");
       closedCardsList = Array.prototype.slice.call(closedCards, 0);
-      console.log(closedCardsList.length);
       if (closedCards.length > 0) {
         botNum = getRandom(0, closedCards.length);
-        closedCardsList[botNum].querySelector(".front").click();
+        cardToClick = closedCardsList[botNum];
+        if (state === 1) {
+          for (l = 0, len2 = closedCardsList.length; l < len2; l++) {
+            i = closedCardsList[l];
+            if ((i.dataset.number === allCardsList[card1].dataset.number) && (i.dataset.times > 0)) {
+              cardToClick = i;
+              console.log("Seen this card!");
+            }
+          }
+        }
+        botNum = getRandom(0, closedCards.length);
+        return cardToClick.querySelector(".front").click();
       }
-      return console.log(closedCards);
     };
     return cardsContainer.addEventListener("click", function(e) {
       var card, ind;
       if (e.target.parentNode.parentNode.parentNode.classList.contains("card")) {
         card = e.target.parentNode.parentNode.parentNode;
         ind = allCardsList.indexOf(card);
-        console.log(exposed[ind]);
         if (exposed[ind] === false) {
           exposed[ind] = true;
-          this.dataset.open = true;
+          card.dataset.open = true;
+          card.dataset.times = parseInt(card.dataset.times) + 1;
           allCardsList[ind].querySelector(".flip-container").classList.add("animate");
           allCardsList[ind].classList.remove("closed-card");
           blub.play();
           if (state === 0) {
             card1 = ind;
-            state = 1;
-            turns += 1;
-            return messageContainer.innerHTML = "Turns = " + turns;
+            return state = 1;
           } else if (state === 1) {
             card2 = ind;
             state = 0;
-            turns += 1;
-            messageContainer.innerHTML = "Turns = " + turns;
             if (newList[card1] !== newList[card2]) {
               exposed[card1] = false;
               exposed[card2] = false;
@@ -136,7 +144,16 @@
               } else if (playersTurn === false) {
                 playersTurn = true;
                 cardsContainer.classList.remove("not-clickable");
-                return clearInterval(myInterval);
+                clearInterval(myInterval);
+                return setTimeout(function() {
+                  return messageContainer.innerHTML = "Your turn";
+                }, 500);
+              }
+            } else {
+              if (playersTurn) {
+                return playersScore += 1;
+              } else {
+                return botsScore += 1;
               }
             }
           }
