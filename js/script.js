@@ -127,6 +127,7 @@
       playersScore = 0;
       botsScore = 0;
       clearInterval(myInterval);
+      cardsContainer.classList.remove("not-clickable");
       state = 0;
       card1 = 33;
       return card2 = 33;

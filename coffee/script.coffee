@@ -82,6 +82,7 @@ window.onload = ->
     playersScore = 0
     botsScore = 0
     clearInterval(myInterval)
+    cardsContainer.classList.remove("not-clickable")
     # clearTimeout(closeCards)
     # clearTimeout(showMessage)
     state = 0
