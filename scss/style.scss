@@ -124,3 +124,12 @@ ul, ol{
 .not-clickable {
   pointer-events: none;
 }
+.choose-theme {
+  margin-top: 20px;
+  font-size: 18px;
+  label {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+}

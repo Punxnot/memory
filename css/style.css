@@ -146,3 +146,13 @@ ul, ol {
 .not-clickable {
   pointer-events: none;
 }
+
+.choose-theme {
+  margin-top: 20px;
+  font-size: 18px;
+}
+.choose-theme label {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+}

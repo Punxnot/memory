@@ -18,6 +18,9 @@ playersTurn = true
 playersScore = 0
 botsScore = 0
 myInterval = null
+num = 0
+theme = "cars"
+chooseThemeRadios = document.querySelectorAll(".choose-theme input")
 
 shuffle = (array) ->
   currentIndex = array.length
@@ -36,10 +39,11 @@ newList = shuffle(endList)
 
 createCards = ->
   card = document.querySelector(".card")
+  theme = document.querySelector("input[type=radio]:checked").id
   for i in newList
     cln = card.cloneNode(true)
     cln.dataset.number = i
-    cln.querySelector(".back").style.backgroundImage = "url(img/#{i}.png)"
+    cln.querySelector(".back").style.backgroundImage = "url(img/#{theme}/#{i}.png)"
     cardsContainer.appendChild(cln)
   for i in endList
     exposed.push(false)
@@ -47,8 +51,11 @@ createCards = ->
 window.onload = ->
   createCards()
   allCards = cardsContainer.querySelectorAll(".card")
+  num = 0
   for i in allCards
     i.classList.add("closed-card")
+    i.setAttribute("id", "card#{num}")
+    num++
   allCardsList = Array.prototype.slice.call(allCards, 0)
   messageContainer.innerHTML = "Ваша очередь"
   playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
@@ -69,9 +76,10 @@ window.onload = ->
       botNum = getRandom(0, closedCards.length)
       cardToClick.querySelector(".front").click()
 
-  startBtn.addEventListener("click", ->
+  newGame = ->
     cardsContainer.innerHTML = ''
     exposed = []
+    num = 0
     newList = shuffle(endList)
     createCards()
     allCards = cardsContainer.querySelectorAll(".card")
@@ -83,15 +91,16 @@ window.onload = ->
     botsScore = 0
     clearInterval(myInterval)
     cardsContainer.classList.remove("not-clickable")
-    # clearTimeout(closeCards)
-    # clearTimeout(showMessage)
     state = 0
     card1 = 33
     card2 = 33
     playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
     botsScoreContainer.innerHTML = "Счёт бота: " + botsScore
     messageContainer.innerHTML = "Ваша очередь"
-  )
+
+  startBtn.addEventListener("click", newGame)
+  for i in chooseThemeRadios
+    i.addEventListener("change", newGame)
 
   cardsContainer.addEventListener("click", (e)->
     if e.target.parentNode.parentNode.parentNode.classList.contains("card")

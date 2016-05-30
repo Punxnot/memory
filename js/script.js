@@ -1,5 +1,5 @@
 (function() {
-  var allCards, blub, boo, botsScore, botsScoreContainer, card1, card2, cardsContainer, createCards, endList, exposed, getRandom, list1, list2, messageContainer, myInterval, newList, playersScore, playersScoreContainer, playersTurn, shuffle, startBtn, state, yeah,
+  var allCards, blub, boo, botsScore, botsScoreContainer, card1, card2, cardsContainer, chooseThemeRadios, createCards, endList, exposed, getRandom, list1, list2, messageContainer, myInterval, newList, num, playersScore, playersScoreContainer, playersTurn, shuffle, startBtn, state, theme, yeah,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   list1 = [0, 1, 2, 3, 4, 5, 6, 7];
@@ -42,6 +42,12 @@
 
   myInterval = null;
 
+  num = 0;
+
+  theme = "cars";
+
+  chooseThemeRadios = document.querySelectorAll(".choose-theme input");
+
   shuffle = function(array) {
     var currentIndex, randomIndex, temporaryValue;
     currentIndex = array.length;
@@ -64,11 +70,12 @@
   createCards = function() {
     var card, cln, i, j, k, len, len1, results;
     card = document.querySelector(".card");
+    theme = document.querySelector("input[type=radio]:checked").id;
     for (j = 0, len = newList.length; j < len; j++) {
       i = newList[j];
       cln = card.cloneNode(true);
       cln.dataset.number = i;
-      cln.querySelector(".back").style.backgroundImage = "url(img/" + i + ".png)";
+      cln.querySelector(".back").style.backgroundImage = "url(img/" + theme + "/" + i + ".png)";
       cardsContainer.appendChild(cln);
     }
     results = [];
@@ -80,12 +87,15 @@
   };
 
   window.onload = function() {
-    var allCardsList, botPlay, i, j, len;
+    var allCardsList, botPlay, i, j, k, len, len1, newGame;
     createCards();
     allCards = cardsContainer.querySelectorAll(".card");
+    num = 0;
     for (j = 0, len = allCards.length; j < len; j++) {
       i = allCards[j];
       i.classList.add("closed-card");
+      i.setAttribute("id", "card" + num);
+      num++;
     }
     allCardsList = Array.prototype.slice.call(allCards, 0);
     messageContainer.innerHTML = "Ваша очередь";
@@ -111,10 +121,11 @@
         return cardToClick.querySelector(".front").click();
       }
     };
-    startBtn.addEventListener("click", function() {
+    newGame = function() {
       var k, len1;
       cardsContainer.innerHTML = '';
       exposed = [];
+      num = 0;
       newList = shuffle(endList);
       createCards();
       allCards = cardsContainer.querySelectorAll(".card");
@@ -134,7 +145,12 @@
       playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
       botsScoreContainer.innerHTML = "Счёт бота: " + botsScore;
       return messageContainer.innerHTML = "Ваша очередь";
-    });
+    };
+    startBtn.addEventListener("click", newGame);
+    for (k = 0, len1 = chooseThemeRadios.length; k < len1; k++) {
+      i = chooseThemeRadios[k];
+      i.addEventListener("change", newGame);
+    }
     return cardsContainer.addEventListener("click", function(e) {
       var card, closeCards, ind, showMessage;
       if (e.target.parentNode.parentNode.parentNode.classList.contains("card")) {
