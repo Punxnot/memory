@@ -2,7 +2,11 @@
   font-family: Cake;
   src: url(../fonts/cake.ttf);
 }
-body {
+body,
+h1,
+h2,
+h3,
+h4 {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
@@ -14,6 +18,10 @@ ul, ol {
 
 * {
   box-sizing: border-box;
+}
+
+h4 {
+  margin-bottom: 20px;
 }
 
 .clearfix::after {

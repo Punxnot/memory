@@ -22,8 +22,10 @@ botsScore = 0
 myInterval = null
 num = 0
 theme = "cars"
+botType = "smart" # or normal, or stupid
 chooseThemeRadios = document.querySelectorAll(".choose-theme .theme-radio")
 chooseNumRadios = document.querySelectorAll(".choose-num")
+chooseBotRadios = document.querySelectorAll(".choose-bot")
 
 shuffle = (array) ->
   currentIndex = array.length
@@ -74,10 +76,18 @@ window.onload = ->
       cardToClick = closedCardsList[botNum]
       if state == 1
         for i in closedCardsList
-          if (i.dataset.number == allCardsList[card1].dataset.number) && (i.dataset.times > 0)
-            cardToClick = i
+          if botType == "smart"
+            if (i.dataset.number == allCardsList[card1].dataset.number) && (i.dataset.times > 0)
+              cardToClick = i
+          else if botType == "normal"
+            if (i.dataset.number == allCardsList[card1].dataset.number) && (i.dataset.times > 1)
+              cardToClick = i
+          else
+            if (i.dataset.number == allCardsList[card1].dataset.number) && (i.dataset.times > 2)
+              cardToClick = i
       botNum = getRandom(0, closedCards.length)
       cardToClick.querySelector(".front").click()
+      console.log botType
 
   newGame = ->
     cardsContainer.innerHTML = ''
@@ -88,6 +98,7 @@ window.onload = ->
     list2 = [0..cardsMaxNum]
     endList = list1.concat(list2)
     newList = shuffle(endList)
+    botType = document.querySelector(".choose-bot:checked").id
     createCards()
     allCards = cardsContainer.querySelectorAll(".card")
     for i in allCards
@@ -108,6 +119,9 @@ window.onload = ->
   startBtn.addEventListener("click", newGame)
 
   for i in chooseThemeRadios
+    i.addEventListener("change", newGame)
+
+  for i in chooseBotRadios
     i.addEventListener("change", newGame)
 
   for i in chooseNumRadios

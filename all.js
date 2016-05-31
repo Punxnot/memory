@@ -1,5 +1,5 @@
 (function() {
-  var allCards, blub, boo, botsScore, botsScoreContainer, card1, card2, cardsContainer, cardsMaxNum, chooseNumRadios, chooseThemeRadios, createCards, endList, exposed, gameContainer, getRandom, j, k, list1, list2, messageContainer, myInterval, newList, num, playersScore, playersScoreContainer, playersTurn, results, results1, shuffle, startBtn, state, theme, yeah,
+  var allCards, blub, boo, botType, botsScore, botsScoreContainer, card1, card2, cardsContainer, cardsMaxNum, chooseBotRadios, chooseNumRadios, chooseThemeRadios, createCards, endList, exposed, gameContainer, getRandom, j, k, list1, list2, messageContainer, myInterval, newList, num, playersScore, playersScoreContainer, playersTurn, results, results1, shuffle, startBtn, state, theme, yeah,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   cardsMaxNum = 7;
@@ -58,9 +58,13 @@
 
   theme = "cars";
 
+  botType = "smart";
+
   chooseThemeRadios = document.querySelectorAll(".choose-theme .theme-radio");
 
   chooseNumRadios = document.querySelectorAll(".choose-num");
+
+  chooseBotRadios = document.querySelectorAll(".choose-bot");
 
   shuffle = function(array) {
     var currentIndex, randomIndex, temporaryValue;
@@ -101,7 +105,7 @@
   };
 
   window.onload = function() {
-    var allCardsList, botPlay, i, l, len, len1, len2, m, n, newGame;
+    var allCardsList, botPlay, i, l, len, len1, len2, len3, m, n, newGame, o;
     createCards();
     allCards = cardsContainer.querySelectorAll(".card");
     num = 0;
@@ -126,13 +130,24 @@
         if (state === 1) {
           for (m = 0, len1 = closedCardsList.length; m < len1; m++) {
             i = closedCardsList[m];
-            if ((i.dataset.number === allCardsList[card1].dataset.number) && (i.dataset.times > 0)) {
-              cardToClick = i;
+            if (botType === "smart") {
+              if ((i.dataset.number === allCardsList[card1].dataset.number) && (i.dataset.times > 0)) {
+                cardToClick = i;
+              }
+            } else if (botType === "normal") {
+              if ((i.dataset.number === allCardsList[card1].dataset.number) && (i.dataset.times > 1)) {
+                cardToClick = i;
+              }
+            } else {
+              if ((i.dataset.number === allCardsList[card1].dataset.number) && (i.dataset.times > 2)) {
+                cardToClick = i;
+              }
             }
           }
         }
         botNum = getRandom(0, closedCards.length);
-        return cardToClick.querySelector(".front").click();
+        cardToClick.querySelector(".front").click();
+        return console.log(botType);
       }
     };
     newGame = function() {
@@ -153,6 +168,7 @@
       }).apply(this);
       endList = list1.concat(list2);
       newList = shuffle(endList);
+      botType = document.querySelector(".choose-bot:checked").id;
       createCards();
       allCards = cardsContainer.querySelectorAll(".card");
       for (o = 0, len1 = allCards.length; o < len1; o++) {
@@ -177,8 +193,12 @@
       i = chooseThemeRadios[m];
       i.addEventListener("change", newGame);
     }
-    for (n = 0, len2 = chooseNumRadios.length; n < len2; n++) {
-      i = chooseNumRadios[n];
+    for (n = 0, len2 = chooseBotRadios.length; n < len2; n++) {
+      i = chooseBotRadios[n];
+      i.addEventListener("change", newGame);
+    }
+    for (o = 0, len3 = chooseNumRadios.length; o < len3; o++) {
+      i = chooseNumRadios[o];
       i.addEventListener("change", function() {
         newGame();
         if (cardsMaxNum === 7) {
