@@ -146,8 +146,7 @@
           }
         }
         botNum = getRandom(0, closedCards.length);
-        cardToClick.querySelector(".front").click();
-        return console.log(botType);
+        return cardToClick.querySelector(".front").click();
       }
     };
     newGame = function() {

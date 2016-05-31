@@ -87,7 +87,6 @@ window.onload = ->
               cardToClick = i
       botNum = getRandom(0, closedCards.length)
       cardToClick.querySelector(".front").click()
-      console.log botType
 
   newGame = ->
     cardsContainer.innerHTML = ''
