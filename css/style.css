@@ -33,6 +33,10 @@ ul, ol {
 
 .game-container {
   text-align: center;
+  min-width: 900px;
+}
+.game-container.large {
+  min-width: 1100px;
 }
 
 .cards-container {
@@ -44,6 +48,10 @@ ul, ol {
   margin-top: 20px;
 }
 
+.large .cards-container {
+  width: 520px;
+}
+
 .card {
   float: left;
   width: 70px;
@@ -52,6 +60,14 @@ ul, ol {
   margin-bottom: 20px;
 }
 .card:nth-of-type(4n) {
+  margin-right: 0;
+}
+
+.large .card:nth-of-type(4n) {
+  margin-right: 20px;
+}
+
+.large .card:nth-of-type(6n) {
   margin-right: 0;
 }
 
@@ -67,6 +83,18 @@ ul, ol {
   text-align: center;
   font-size: 24px;
   color: #16829e;
+}
+.text-container.cards-num {
+  font-size: 18px;
+}
+.text-container.cards-num label {
+  display: block;
+  margin-bottom: 10px;
+}
+.text-container.cards-num label input {
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: top;
 }
 .text-container p {
   font-size: 14px;

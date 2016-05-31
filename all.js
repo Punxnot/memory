@@ -1,16 +1,28 @@
 (function() {
-  var allCards, blub, boo, botsScore, botsScoreContainer, card1, card2, cardsContainer, chooseThemeRadios, createCards, endList, exposed, getRandom, list1, list2, messageContainer, myInterval, newList, num, playersScore, playersScoreContainer, playersTurn, shuffle, startBtn, state, theme, yeah,
+  var allCards, blub, boo, botsScore, botsScoreContainer, card1, card2, cardsContainer, cardsMaxNum, chooseNumRadios, chooseThemeRadios, createCards, endList, exposed, gameContainer, getRandom, j, k, list1, list2, messageContainer, myInterval, newList, num, playersScore, playersScoreContainer, playersTurn, results, results1, shuffle, startBtn, state, theme, yeah,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  list1 = [0, 1, 2, 3, 4, 5, 6, 7];
+  cardsMaxNum = 7;
 
-  list2 = [0, 1, 2, 3, 4, 5, 6, 7];
+  list1 = (function() {
+    results = [];
+    for (var j = 0; 0 <= cardsMaxNum ? j <= cardsMaxNum : j >= cardsMaxNum; 0 <= cardsMaxNum ? j++ : j--){ results.push(j); }
+    return results;
+  }).apply(this);
+
+  list2 = (function() {
+    results1 = [];
+    for (var k = 0; 0 <= cardsMaxNum ? k <= cardsMaxNum : k >= cardsMaxNum; 0 <= cardsMaxNum ? k++ : k--){ results1.push(k); }
+    return results1;
+  }).apply(this);
 
   endList = list1.concat(list2);
 
   cardsContainer = document.getElementById("cardsContainer");
 
   allCards = [];
+
+  gameContainer = document.getElementById("gameContainer");
 
   messageContainer = document.getElementById("messageContainer");
 
@@ -46,7 +58,9 @@
 
   theme = "cars";
 
-  chooseThemeRadios = document.querySelectorAll(".choose-theme input");
+  chooseThemeRadios = document.querySelectorAll(".choose-theme .theme-radio");
+
+  chooseNumRadios = document.querySelectorAll(".choose-num");
 
   shuffle = function(array) {
     var currentIndex, randomIndex, temporaryValue;
@@ -68,31 +82,31 @@
   newList = shuffle(endList);
 
   createCards = function() {
-    var card, cln, i, j, k, len, len1, results;
+    var card, cln, i, l, len, len1, m, results2;
     card = document.querySelector(".card");
-    theme = document.querySelector("input[type=radio]:checked").id;
-    for (j = 0, len = newList.length; j < len; j++) {
-      i = newList[j];
+    theme = document.querySelector(".theme-radio:checked").id;
+    for (l = 0, len = newList.length; l < len; l++) {
+      i = newList[l];
       cln = card.cloneNode(true);
       cln.dataset.number = i;
       cln.querySelector(".back").style.backgroundImage = "url(img/" + theme + "/" + i + ".png)";
       cardsContainer.appendChild(cln);
     }
-    results = [];
-    for (k = 0, len1 = endList.length; k < len1; k++) {
-      i = endList[k];
-      results.push(exposed.push(false));
+    results2 = [];
+    for (m = 0, len1 = endList.length; m < len1; m++) {
+      i = endList[m];
+      results2.push(exposed.push(false));
     }
-    return results;
+    return results2;
   };
 
   window.onload = function() {
-    var allCardsList, botPlay, i, j, k, len, len1, newGame;
+    var allCardsList, botPlay, i, l, len, len1, len2, m, n, newGame;
     createCards();
     allCards = cardsContainer.querySelectorAll(".card");
     num = 0;
-    for (j = 0, len = allCards.length; j < len; j++) {
-      i = allCards[j];
+    for (l = 0, len = allCards.length; l < len; l++) {
+      i = allCards[l];
       i.classList.add("closed-card");
       i.setAttribute("id", "card" + num);
       num++;
@@ -102,7 +116,7 @@
     playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
     botsScoreContainer.innerHTML = "Счёт бота: " + botsScore;
     botPlay = function() {
-      var botNum, cardToClick, closedCards, closedCardsList, k, len1;
+      var botNum, cardToClick, closedCards, closedCardsList, len1, m;
       closedCards = document.querySelectorAll(".closed-card");
       closedCardsList = Array.prototype.slice.call(closedCards, 0);
       if (closedCards.length > 0) {
@@ -110,8 +124,8 @@
         botNum = getRandom(0, closedCards.length);
         cardToClick = closedCardsList[botNum];
         if (state === 1) {
-          for (k = 0, len1 = closedCardsList.length; k < len1; k++) {
-            i = closedCardsList[k];
+          for (m = 0, len1 = closedCardsList.length; m < len1; m++) {
+            i = closedCardsList[m];
             if ((i.dataset.number === allCardsList[card1].dataset.number) && (i.dataset.times > 0)) {
               cardToClick = i;
             }
@@ -122,15 +136,27 @@
       }
     };
     newGame = function() {
-      var k, len1;
+      var len1, m, n, o, results2, results3;
       cardsContainer.innerHTML = '';
       exposed = [];
       num = 0;
+      cardsMaxNum = parseInt(document.querySelector(".choose-num:checked").id);
+      list1 = (function() {
+        results2 = [];
+        for (var m = 0; 0 <= cardsMaxNum ? m <= cardsMaxNum : m >= cardsMaxNum; 0 <= cardsMaxNum ? m++ : m--){ results2.push(m); }
+        return results2;
+      }).apply(this);
+      list2 = (function() {
+        results3 = [];
+        for (var n = 0; 0 <= cardsMaxNum ? n <= cardsMaxNum : n >= cardsMaxNum; 0 <= cardsMaxNum ? n++ : n--){ results3.push(n); }
+        return results3;
+      }).apply(this);
+      endList = list1.concat(list2);
       newList = shuffle(endList);
       createCards();
       allCards = cardsContainer.querySelectorAll(".card");
-      for (k = 0, len1 = allCards.length; k < len1; k++) {
-        i = allCards[k];
+      for (o = 0, len1 = allCards.length; o < len1; o++) {
+        i = allCards[o];
         i.classList.add("closed-card");
       }
       allCardsList = Array.prototype.slice.call(allCards, 0);
@@ -147,9 +173,20 @@
       return messageContainer.innerHTML = "Ваша очередь";
     };
     startBtn.addEventListener("click", newGame);
-    for (k = 0, len1 = chooseThemeRadios.length; k < len1; k++) {
-      i = chooseThemeRadios[k];
+    for (m = 0, len1 = chooseThemeRadios.length; m < len1; m++) {
+      i = chooseThemeRadios[m];
       i.addEventListener("change", newGame);
+    }
+    for (n = 0, len2 = chooseNumRadios.length; n < len2; n++) {
+      i = chooseNumRadios[n];
+      i.addEventListener("change", function() {
+        newGame();
+        if (cardsMaxNum === 7) {
+          return gameContainer.classList.remove("large");
+        } else if (cardsMaxNum === 11) {
+          return gameContainer.classList.add("large");
+        }
+      });
     }
     return cardsContainer.addEventListener("click", function(e) {
       var card, closeCards, ind, showMessage;

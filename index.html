@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div class="game-container">
+    <div class="game-container" id="gameContainer">
       <div class="text-container">
         <div class="logo">
           Memory
@@ -34,11 +34,16 @@
         <button class="btn" type="button" name="button" id="startBtn">Начать заново</button>
         <div class="choose-theme">
           Выберите тему:
-          <label><input type="radio" name="choose-theme" id="programming" checked>Программирование</label>
-          <label><input type="radio" name="choose-theme" id="cars">Автомобили</label>
+          <label><input class="theme-radio" type="radio" name="choose-theme" id="programming" checked>Программирование</label>
+          <label><input class="theme-radio" type="radio" name="choose-theme" id="cars">Автомобили</label>
         </div>
       </div>
       <div class="cards-container clearfix" id="cardsContainer"></div>
+      <div class="text-container cards-num">
+        <h4>Количество карточек</h4>
+        <label><input class="choose-num" type="radio" name="choose-cards-number" id="7" checked>16</label>
+        <label><input class="choose-num" type="radio" name="choose-cards-number" id="11">24</label>
+      </div>
     </div>
 
     <script src="all.js"></script>

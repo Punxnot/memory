@@ -1,8 +1,10 @@
-list1 = [0..7]
-list2 = [0..7]
+cardsMaxNum = 7
+list1 = [0..cardsMaxNum]
+list2 = [0..cardsMaxNum]
 endList = list1.concat(list2)
 cardsContainer = document.getElementById("cardsContainer")
 allCards = []
+gameContainer = document.getElementById("gameContainer")
 messageContainer = document.getElementById("messageContainer")
 botsScoreContainer = document.getElementById("botsScore")
 playersScoreContainer = document.getElementById("playersScore")
@@ -20,7 +22,8 @@ botsScore = 0
 myInterval = null
 num = 0
 theme = "cars"
-chooseThemeRadios = document.querySelectorAll(".choose-theme input")
+chooseThemeRadios = document.querySelectorAll(".choose-theme .theme-radio")
+chooseNumRadios = document.querySelectorAll(".choose-num")
 
 shuffle = (array) ->
   currentIndex = array.length
@@ -39,7 +42,7 @@ newList = shuffle(endList)
 
 createCards = ->
   card = document.querySelector(".card")
-  theme = document.querySelector("input[type=radio]:checked").id
+  theme = document.querySelector(".theme-radio:checked").id
   for i in newList
     cln = card.cloneNode(true)
     cln.dataset.number = i
@@ -80,6 +83,10 @@ window.onload = ->
     cardsContainer.innerHTML = ''
     exposed = []
     num = 0
+    cardsMaxNum = parseInt(document.querySelector(".choose-num:checked").id)
+    list1 = [0..cardsMaxNum]
+    list2 = [0..cardsMaxNum]
+    endList = list1.concat(list2)
     newList = shuffle(endList)
     createCards()
     allCards = cardsContainer.querySelectorAll(".card")
@@ -99,8 +106,18 @@ window.onload = ->
     messageContainer.innerHTML = "Ваша очередь"
 
   startBtn.addEventListener("click", newGame)
+
   for i in chooseThemeRadios
     i.addEventListener("change", newGame)
+
+  for i in chooseNumRadios
+    i.addEventListener("change", ->
+      newGame()
+      if cardsMaxNum == 7
+        gameContainer.classList.remove("large")
+      else if cardsMaxNum == 11
+        gameContainer.classList.add("large")
+    )
 
   cardsContainer.addEventListener("click", (e)->
     if e.target.parentNode.parentNode.parentNode.classList.contains("card")
