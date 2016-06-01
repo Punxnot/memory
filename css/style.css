@@ -2,6 +2,22 @@
   font-family: Cake;
   src: url(../fonts/cake.ttf);
 }
+@-webkit-keyframes cardAppear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes cardAppear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 body,
 h1,
 h2,
@@ -66,6 +82,9 @@ h4 {
   height: 124px;
   margin-right: 20px;
   margin-bottom: 20px;
+  opacity: 0;
+  -webkit-animation: cardAppear .5s forwards;
+          animation: cardAppear .5s forwards;
 }
 .card:nth-of-type(4n) {
   margin-right: 0;

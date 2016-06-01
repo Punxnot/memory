@@ -103,6 +103,7 @@
       i = allCards[k];
       i.classList.add("closed-card");
       i.setAttribute("id", "card" + num);
+      i.style.animationDelay = (num * 0.1) + "s";
       num++;
     }
     allCardsList = Array.prototype.slice.call(allCards, 0);

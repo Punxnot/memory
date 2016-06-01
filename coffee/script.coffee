@@ -58,6 +58,7 @@ window.onload = ->
   for i in allCards
     i.classList.add("closed-card")
     i.setAttribute("id", "card#{num}")
+    i.style.animationDelay = "#{num * 0.1}s"
     num++
   allCardsList = Array.prototype.slice.call(allCards, 0)
   messageContainer.innerHTML = "Ваша очередь"
