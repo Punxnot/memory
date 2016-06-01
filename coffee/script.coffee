@@ -1,9 +1,6 @@
 cardsMaxNum = 7
 list1 = [0..cardsMaxNum]
-list2 = [0..cardsMaxNum]
-endList = list1.concat(list2)
 cardsContainer = document.getElementById("cardsContainer")
-allCards = []
 gameContainer = document.getElementById("gameContainer")
 messageContainer = document.getElementById("messageContainer")
 botsScoreContainer = document.getElementById("botsScore")
@@ -13,9 +10,9 @@ exposed = []
 state = 0
 card1 = 33
 card2 = 33
-blub = new Audio('blub.wav')
-yeah = new Audio('yeah.wav')
-boo = new Audio('boo.wav')
+blub = new Audio('audio/blub.wav')
+yeah = new Audio('audio/yeah.wav')
+boo = new Audio('audio/boo.wav')
 playersTurn = true
 playersScore = 0
 botsScore = 0
@@ -40,7 +37,8 @@ shuffle = (array) ->
 getRandom = (min, max) ->
   return Math.floor(Math.random() * (max - min)) + min
 
-newList = shuffle(endList)
+# Create random array of cards numbers
+newList = shuffle(list1.concat(list1.slice()))
 
 createCards = ->
   card = document.querySelector(".card")
@@ -50,7 +48,7 @@ createCards = ->
     cln.dataset.number = i
     cln.querySelector(".back").style.backgroundImage = "url(img/#{theme}/#{i}.png)"
     cardsContainer.appendChild(cln)
-  for i in endList
+  for i in newList
     exposed.push(false)
 
 window.onload = ->
@@ -94,9 +92,7 @@ window.onload = ->
     num = 0
     cardsMaxNum = parseInt(document.querySelector(".choose-num:checked").id)
     list1 = [0..cardsMaxNum]
-    list2 = [0..cardsMaxNum]
-    endList = list1.concat(list2)
-    newList = shuffle(endList)
+    newList = shuffle(list1.concat(list1.slice()))
     botType = document.querySelector(".choose-bot:checked").id
     createCards()
     allCards = cardsContainer.querySelectorAll(".card")

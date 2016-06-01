@@ -1,5 +1,5 @@
 (function() {
-  var allCards, blub, boo, botType, botsScore, botsScoreContainer, card1, card2, cardsContainer, cardsMaxNum, chooseBotRadios, chooseNumRadios, chooseThemeRadios, createCards, endList, exposed, gameContainer, getRandom, j, k, list1, list2, messageContainer, myInterval, newList, num, playersScore, playersScoreContainer, playersTurn, results, results1, shuffle, startBtn, state, theme, yeah,
+  var blub, boo, botType, botsScore, botsScoreContainer, card1, card2, cardsContainer, cardsMaxNum, chooseBotRadios, chooseNumRadios, chooseThemeRadios, createCards, exposed, gameContainer, getRandom, j, list1, messageContainer, myInterval, newList, num, playersScore, playersScoreContainer, playersTurn, results, shuffle, startBtn, state, theme, yeah,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   cardsMaxNum = 7;
@@ -10,17 +10,7 @@
     return results;
   }).apply(this);
 
-  list2 = (function() {
-    results1 = [];
-    for (var k = 0; 0 <= cardsMaxNum ? k <= cardsMaxNum : k >= cardsMaxNum; 0 <= cardsMaxNum ? k++ : k--){ results1.push(k); }
-    return results1;
-  }).apply(this);
-
-  endList = list1.concat(list2);
-
   cardsContainer = document.getElementById("cardsContainer");
-
-  allCards = [];
 
   gameContainer = document.getElementById("gameContainer");
 
@@ -40,11 +30,11 @@
 
   card2 = 33;
 
-  blub = new Audio('blub.wav');
+  blub = new Audio('audio/blub.wav');
 
-  yeah = new Audio('yeah.wav');
+  yeah = new Audio('audio/yeah.wav');
 
-  boo = new Audio('boo.wav');
+  boo = new Audio('audio/boo.wav');
 
   playersTurn = true;
 
@@ -83,34 +73,34 @@
     return Math.floor(Math.random() * (max - min)) + min;
   };
 
-  newList = shuffle(endList);
+  newList = shuffle(list1.concat(list1.slice()));
 
   createCards = function() {
-    var card, cln, i, l, len, len1, m, results2;
+    var card, cln, i, k, l, len, len1, results1;
     card = document.querySelector(".card");
     theme = document.querySelector(".theme-radio:checked").id;
-    for (l = 0, len = newList.length; l < len; l++) {
-      i = newList[l];
+    for (k = 0, len = newList.length; k < len; k++) {
+      i = newList[k];
       cln = card.cloneNode(true);
       cln.dataset.number = i;
       cln.querySelector(".back").style.backgroundImage = "url(img/" + theme + "/" + i + ".png)";
       cardsContainer.appendChild(cln);
     }
-    results2 = [];
-    for (m = 0, len1 = endList.length; m < len1; m++) {
-      i = endList[m];
-      results2.push(exposed.push(false));
+    results1 = [];
+    for (l = 0, len1 = newList.length; l < len1; l++) {
+      i = newList[l];
+      results1.push(exposed.push(false));
     }
-    return results2;
+    return results1;
   };
 
   window.onload = function() {
-    var allCardsList, botPlay, i, l, len, len1, len2, len3, m, n, newGame, o;
+    var allCards, allCardsList, botPlay, i, k, l, len, len1, len2, len3, m, n, newGame;
     createCards();
     allCards = cardsContainer.querySelectorAll(".card");
     num = 0;
-    for (l = 0, len = allCards.length; l < len; l++) {
-      i = allCards[l];
+    for (k = 0, len = allCards.length; k < len; k++) {
+      i = allCards[k];
       i.classList.add("closed-card");
       i.setAttribute("id", "card" + num);
       num++;
@@ -120,7 +110,7 @@
     playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
     botsScoreContainer.innerHTML = "Счёт бота: " + botsScore;
     botPlay = function() {
-      var botNum, cardToClick, closedCards, closedCardsList, len1, m;
+      var botNum, cardToClick, closedCards, closedCardsList, l, len1;
       closedCards = document.querySelectorAll(".closed-card");
       closedCardsList = Array.prototype.slice.call(closedCards, 0);
       if (closedCards.length > 0) {
@@ -128,8 +118,8 @@
         botNum = getRandom(0, closedCards.length);
         cardToClick = closedCardsList[botNum];
         if (state === 1) {
-          for (m = 0, len1 = closedCardsList.length; m < len1; m++) {
-            i = closedCardsList[m];
+          for (l = 0, len1 = closedCardsList.length; l < len1; l++) {
+            i = closedCardsList[l];
             if (botType === "smart") {
               if ((i.dataset.number === allCardsList[card1].dataset.number) && (i.dataset.times > 0)) {
                 cardToClick = i;
@@ -150,28 +140,22 @@
       }
     };
     newGame = function() {
-      var len1, m, n, o, results2, results3;
+      var l, len1, m, results1;
       cardsContainer.innerHTML = '';
       exposed = [];
       num = 0;
       cardsMaxNum = parseInt(document.querySelector(".choose-num:checked").id);
       list1 = (function() {
-        results2 = [];
-        for (var m = 0; 0 <= cardsMaxNum ? m <= cardsMaxNum : m >= cardsMaxNum; 0 <= cardsMaxNum ? m++ : m--){ results2.push(m); }
-        return results2;
+        results1 = [];
+        for (var l = 0; 0 <= cardsMaxNum ? l <= cardsMaxNum : l >= cardsMaxNum; 0 <= cardsMaxNum ? l++ : l--){ results1.push(l); }
+        return results1;
       }).apply(this);
-      list2 = (function() {
-        results3 = [];
-        for (var n = 0; 0 <= cardsMaxNum ? n <= cardsMaxNum : n >= cardsMaxNum; 0 <= cardsMaxNum ? n++ : n--){ results3.push(n); }
-        return results3;
-      }).apply(this);
-      endList = list1.concat(list2);
-      newList = shuffle(endList);
+      newList = shuffle(list1.concat(list1.slice()));
       botType = document.querySelector(".choose-bot:checked").id;
       createCards();
       allCards = cardsContainer.querySelectorAll(".card");
-      for (o = 0, len1 = allCards.length; o < len1; o++) {
-        i = allCards[o];
+      for (m = 0, len1 = allCards.length; m < len1; m++) {
+        i = allCards[m];
         i.classList.add("closed-card");
       }
       allCardsList = Array.prototype.slice.call(allCards, 0);
@@ -188,16 +172,16 @@
       return messageContainer.innerHTML = "Ваша очередь";
     };
     startBtn.addEventListener("click", newGame);
-    for (m = 0, len1 = chooseThemeRadios.length; m < len1; m++) {
-      i = chooseThemeRadios[m];
+    for (l = 0, len1 = chooseThemeRadios.length; l < len1; l++) {
+      i = chooseThemeRadios[l];
       i.addEventListener("change", newGame);
     }
-    for (n = 0, len2 = chooseBotRadios.length; n < len2; n++) {
-      i = chooseBotRadios[n];
+    for (m = 0, len2 = chooseBotRadios.length; m < len2; m++) {
+      i = chooseBotRadios[m];
       i.addEventListener("change", newGame);
     }
-    for (o = 0, len3 = chooseNumRadios.length; o < len3; o++) {
-      i = chooseNumRadios[o];
+    for (n = 0, len3 = chooseNumRadios.length; n < len3; n++) {
+      i = chooseNumRadios[n];
       i.addEventListener("change", function() {
         newGame();
         if (cardsMaxNum === 7) {
