@@ -12,41 +12,66 @@
         <div class="flip-container">
           <div class="flipper">
             <div class="front"></div>
-            <div class="back">
-
-            </div>
+            <div class="back"></div>
           </div>
         </div>
       </div>
     </div>
 
     <div class="game-container" id="gameContainer">
-      <div class="text-container">
+      <div class="settings-screen" id="settingsScreen">
         <div class="logo">
           Memory
         </div>
-        <p>
-          Кликайте по карточкам и ищите одинаковые. Против вас играет очень умный бот!
-        </p>
-        <div class="message-container" id="messageContainer"></div>
-        <div class="players-score" id="playersScore"></div>
-        <div class="bots-score" id="botsScore"></div>
-        <button class="btn" type="button" name="button" id="startBtn">Начать заново</button>
-        <div class="choose-theme">
+        <div>
           Выберите тему:
-          <label><input class="theme-radio" type="radio" name="choose-theme" id="programming" checked>Программирование</label>
-          <label><input class="theme-radio" type="radio" name="choose-theme" id="cars">Автомобили</label>
+          <select name="choose-theme" id="chooseTheme">
+            <option value="programming">Программирование</option>
+            <option value="cars">Автомобили</option>
+          </select>
         </div>
+        <div>
+          Количество карточек:
+          <label><input class="choose-num" type="radio" name="choose-cards-number" data-cardsnum="7" checked>16</label>
+          <label><input class="choose-num" type="radio" name="choose-cards-number" data-cardsnum="11">24</label>
+        </div>
+        <div>
+          Режим игры:
+          <input class="choose-mode" type="radio" name="choose-mode" data-mode="botMode" id="botMode"><label for="botMode">Играть с ботом</label>
+          <input class="choose-mode" type="radio" name="choose-mode" data-mode="singleMode" id="singleMode" checked><label for="singleMode">Играть самому</label>
+          <div class="bot-type">
+            Выберите бота:
+            <label><input class="choose-bot" type="radio" name="choose-bot" data-bottype="smart">Умный</label>
+            <label><input class="choose-bot" type="radio" name="choose-bot" data-bottype="normal" checked>Средний</label>
+            <label><input class="choose-bot" type="radio" name="choose-bot" data-bottype="stupid">Глупый</label>
+          </div>
+        </div>
+
+        <button id="playBtn">Start Game!</button>
       </div>
-      <div class="cards-container clearfix" id="cardsContainer"></div>
-      <div class="text-container cards-num">
-        <h4>Количество карточек</h4>
-        <label><input class="choose-num" type="radio" name="choose-cards-number" id="7" checked>16</label>
-        <label><input class="choose-num" type="radio" name="choose-cards-number" id="11">24</label>
-        <h4>Тип бота</h4>
-        <label><input class="choose-bot" type="radio" name="choose-bot" id="smart" checked>Умный</label>
-        <label><input class="choose-bot" type="radio" name="choose-bot" id="normal">Средний</label>
-        <label><input class="choose-bot" type="radio" name="choose-bot" id="stupid">Глупый</label>
+      <div class="main-screen" id="mainScreen">
+        <div class="text-container">
+          <div class="logo">
+            Memory
+          </div>
+          <p>
+            Кликайте по карточкам и ищите одинаковые.
+          </p>
+          <div class="message-container" id="messageContainer"></div>
+          <div class="players-score" id="playersScore"></div>
+          <div class="bots-score" id="botsScore"></div>
+          <button class="btn" type="button" name="button" id="startBtn">Начать заново</button>
+        </div>
+        <div class="cards-container clearfix" id="cardsContainer"></div>
+        <!-- <div class="text-container cards-num">
+          <h4>Количество карточек</h4>
+          <label><input class="choose-num" type="radio" name="choose-cards-number" id="7" checked>16</label>
+          <label><input class="choose-num" type="radio" name="choose-cards-number" id="11">24</label>
+          <h4>Тип бота</h4>
+          <label><input class="choose-bot" type="radio" name="choose-bot" id="smart" checked>Умный</label>
+          <label><input class="choose-bot" type="radio" name="choose-bot" id="normal">Средний</label>
+          <label><input class="choose-bot" type="radio" name="choose-bot" id="stupid">Глупый</label>
+        </div> -->
       </div>
     </div>
 

@@ -211,3 +211,12 @@ h4 {
   margin-top: 10px;
   font-size: 14px;
 }
+
+.bot-type,
+.main-screen {
+  display: none;
+}
+
+.choose-mode[data-mode="botMode"]:checked ~ .bot-type {
+  display: block;
+}

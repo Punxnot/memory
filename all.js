@@ -1,5 +1,5 @@
 (function() {
-  var blub, boo, botType, botsScore, botsScoreContainer, card1, card2, cardsContainer, cardsMaxNum, chooseBotRadios, chooseNumRadios, chooseThemeRadios, createCards, exposed, gameContainer, getRandom, j, list1, messageContainer, mode, myInterval, newList, num, playersScore, playersScoreContainer, playersTurn, results, shuffle, startBtn, state, theme, yeah,
+  var blub, boo, botType, botsScore, botsScoreContainer, card1, card2, cardsContainer, cardsMaxNum, chooseTheme, createCards, exposed, gameContainer, getRandom, j, list1, mainScreen, messageContainer, mode, myInterval, newList, num, playBtn, playersScore, playersScoreContainer, playersTurn, results, settingsScreen, shuffle, startBtn, startGame, state, theme, yeah,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   cardsMaxNum = 7;
@@ -46,17 +46,23 @@
 
   num = 0;
 
-  theme = "cars";
-
   botType = "smart";
 
-  chooseThemeRadios = document.querySelectorAll(".choose-theme .theme-radio");
+  chooseTheme = document.getElementById("chooseTheme");
 
-  chooseNumRadios = document.querySelectorAll(".choose-num");
-
-  chooseBotRadios = document.querySelectorAll(".choose-bot");
+  theme = "programming";
 
   mode = "singleMode";
+
+  settingsScreen = document.getElementById("settingsScreen");
+
+  mainScreen = document.getElementById("mainScreen");
+
+  playBtn = document.getElementById("playBtn");
+
+  playBtn.addEventListener("click", function() {
+    return startGame();
+  });
 
   shuffle = function(array) {
     var currentIndex, randomIndex, temporaryValue;
@@ -71,33 +77,49 @@
     return array;
   };
 
+  newList = shuffle(list1.concat(list1.slice()));
+
   getRandom = function(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   };
 
-  newList = shuffle(list1.concat(list1.slice()));
-
   createCards = function() {
-    var card, cln, i, k, l, len, len1, results1;
+    var card, cln, i, k, l, len, len1, m, results1, results2;
+    cardsMaxNum = parseInt(document.querySelector(".choose-num:checked").dataset.cardsnum);
+    list1 = (function() {
+      results1 = [];
+      for (var k = 0; 0 <= cardsMaxNum ? k <= cardsMaxNum : k >= cardsMaxNum; 0 <= cardsMaxNum ? k++ : k--){ results1.push(k); }
+      return results1;
+    }).apply(this);
+    newList = shuffle(list1.concat(list1.slice()));
     card = document.querySelector(".card");
-    theme = document.querySelector(".theme-radio:checked").id;
-    for (k = 0, len = newList.length; k < len; k++) {
-      i = newList[k];
+    theme = chooseTheme.value;
+    for (l = 0, len = newList.length; l < len; l++) {
+      i = newList[l];
       cln = card.cloneNode(true);
       cln.dataset.number = i;
       cln.querySelector(".back").style.backgroundImage = "url(img/" + theme + "/" + i + ".png)";
       cardsContainer.appendChild(cln);
     }
-    results1 = [];
-    for (l = 0, len1 = newList.length; l < len1; l++) {
-      i = newList[l];
-      results1.push(exposed.push(false));
+    results2 = [];
+    for (m = 0, len1 = newList.length; m < len1; m++) {
+      i = newList[m];
+      results2.push(exposed.push(false));
     }
-    return results1;
+    return results2;
   };
 
-  window.onload = function() {
-    var allCards, allCardsList, botPlay, i, k, l, len, len1, len2, len3, m, n, newGame;
+  startGame = function() {
+    var allCards, allCardsList, botPlay, i, k, len, newGame;
+    settingsScreen.style.display = "none";
+    mainScreen.style.display = "block";
+    cardsMaxNum = parseInt(document.querySelector(".choose-num:checked").dataset.cardsnum);
+    if (cardsMaxNum === 7) {
+      gameContainer.classList.remove("large");
+    } else if (cardsMaxNum === 11) {
+      gameContainer.classList.add("large");
+    }
+    botType = document.querySelector(".choose-bot:checked").dataset.bottype;
     createCards();
     allCards = cardsContainer.querySelectorAll(".card");
     num = 0;
@@ -147,14 +169,12 @@
       cardsContainer.innerHTML = '';
       exposed = [];
       num = 0;
-      cardsMaxNum = parseInt(document.querySelector(".choose-num:checked").id);
       list1 = (function() {
         results1 = [];
         for (var l = 0; 0 <= cardsMaxNum ? l <= cardsMaxNum : l >= cardsMaxNum; 0 <= cardsMaxNum ? l++ : l--){ results1.push(l); }
         return results1;
       }).apply(this);
       newList = shuffle(list1.concat(list1.slice()));
-      botType = document.querySelector(".choose-bot:checked").id;
       createCards();
       allCards = cardsContainer.querySelectorAll(".card");
       for (m = 0, len1 = allCards.length; m < len1; m++) {
@@ -175,25 +195,6 @@
       return messageContainer.innerHTML = "Ваша очередь";
     };
     startBtn.addEventListener("click", newGame);
-    for (l = 0, len1 = chooseThemeRadios.length; l < len1; l++) {
-      i = chooseThemeRadios[l];
-      i.addEventListener("change", newGame);
-    }
-    for (m = 0, len2 = chooseBotRadios.length; m < len2; m++) {
-      i = chooseBotRadios[m];
-      i.addEventListener("change", newGame);
-    }
-    for (n = 0, len3 = chooseNumRadios.length; n < len3; n++) {
-      i = chooseNumRadios[n];
-      i.addEventListener("change", function() {
-        newGame();
-        if (cardsMaxNum === 7) {
-          return gameContainer.classList.remove("large");
-        } else if (cardsMaxNum === 11) {
-          return gameContainer.classList.add("large");
-        }
-      });
-    }
     return cardsContainer.addEventListener("click", function(e) {
       var card, closeCards, ind, showMessage;
       if (e.target.parentNode.parentNode.parentNode.classList.contains("card")) {

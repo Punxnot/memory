@@ -18,12 +18,16 @@ playersScore = 0
 botsScore = 0
 myInterval = null
 num = 0
-theme = "cars"
 botType = "smart" # or normal, or stupid
-chooseThemeRadios = document.querySelectorAll(".choose-theme .theme-radio")
-chooseNumRadios = document.querySelectorAll(".choose-num")
-chooseBotRadios = document.querySelectorAll(".choose-bot")
+chooseTheme = document.getElementById("chooseTheme")
+theme = "programming"
 mode = "singleMode" # "botMode" or "singleMode"
+settingsScreen = document.getElementById("settingsScreen")
+mainScreen = document.getElementById("mainScreen")
+playBtn = document.getElementById("playBtn");
+playBtn.addEventListener("click", ->
+  startGame()
+)
 
 shuffle = (array) ->
   currentIndex = array.length
@@ -35,15 +39,17 @@ shuffle = (array) ->
     array[randomIndex] = temporaryValue
   return array
 
+newList = shuffle(list1.concat(list1.slice()))
+
 getRandom = (min, max) ->
   return Math.floor(Math.random() * (max - min)) + min
 
-# Create random array of cards numbers
-newList = shuffle(list1.concat(list1.slice()))
-
 createCards = ->
+  cardsMaxNum = parseInt(document.querySelector(".choose-num:checked").dataset.cardsnum)
+  list1 = [0..cardsMaxNum]
+  newList = shuffle(list1.concat(list1.slice()))
   card = document.querySelector(".card")
-  theme = document.querySelector(".theme-radio:checked").id
+  theme = chooseTheme.value
   for i in newList
     cln = card.cloneNode(true)
     cln.dataset.number = i
@@ -52,7 +58,16 @@ createCards = ->
   for i in newList
     exposed.push(false)
 
-window.onload = ->
+# window.onload = ->
+startGame = ->
+  settingsScreen.style.display = "none"
+  mainScreen.style.display = "block"
+  cardsMaxNum = parseInt(document.querySelector(".choose-num:checked").dataset.cardsnum)
+  if cardsMaxNum == 7
+    gameContainer.classList.remove("large")
+  else if cardsMaxNum == 11
+    gameContainer.classList.add("large")
+  botType = document.querySelector(".choose-bot:checked").dataset.bottype
   createCards()
   allCards = cardsContainer.querySelectorAll(".card")
   num = 0
@@ -92,10 +107,8 @@ window.onload = ->
     cardsContainer.innerHTML = ''
     exposed = []
     num = 0
-    cardsMaxNum = parseInt(document.querySelector(".choose-num:checked").id)
     list1 = [0..cardsMaxNum]
     newList = shuffle(list1.concat(list1.slice()))
-    botType = document.querySelector(".choose-bot:checked").id
     createCards()
     allCards = cardsContainer.querySelectorAll(".card")
     for i in allCards
@@ -114,21 +127,6 @@ window.onload = ->
     messageContainer.innerHTML = "Ваша очередь"
 
   startBtn.addEventListener("click", newGame)
-
-  for i in chooseThemeRadios
-    i.addEventListener("change", newGame)
-
-  for i in chooseBotRadios
-    i.addEventListener("change", newGame)
-
-  for i in chooseNumRadios
-    i.addEventListener("change", ->
-      newGame()
-      if cardsMaxNum == 7
-        gameContainer.classList.remove("large")
-      else if cardsMaxNum == 11
-        gameContainer.classList.add("large")
-    )
 
   cardsContainer.addEventListener("click", (e)->
     if e.target.parentNode.parentNode.parentNode.classList.contains("card")
