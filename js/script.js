@@ -94,6 +94,7 @@
     newList = shuffle(list1.concat(list1.slice()));
     card = document.querySelector(".card");
     theme = chooseTheme.value;
+    mode = document.querySelector(".choose-mode:checked").dataset.mode;
     for (l = 0, len = newList.length; l < len; l++) {
       i = newList[l];
       cln = card.cloneNode(true);
@@ -131,9 +132,11 @@
       num++;
     }
     allCardsList = Array.prototype.slice.call(allCards, 0);
-    messageContainer.innerHTML = "Ваша очередь";
-    playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
-    botsScoreContainer.innerHTML = "Счёт бота: " + botsScore;
+    if (mode === "botMode") {
+      messageContainer.innerHTML = "Ваша очередь";
+      playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
+      botsScoreContainer.innerHTML = "Счёт бота: " + botsScore;
+    }
     botPlay = function() {
       var botNum, cardToClick, closedCards, closedCardsList, l, len1;
       closedCards = document.querySelectorAll(".closed-card");
@@ -190,9 +193,11 @@
       state = 0;
       card1 = 33;
       card2 = 33;
-      playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
-      botsScoreContainer.innerHTML = "Счёт бота: " + botsScore;
-      return messageContainer.innerHTML = "Ваша очередь";
+      if (mode === "botMode") {
+        playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
+        botsScoreContainer.innerHTML = "Счёт бота: " + botsScore;
+        return messageContainer.innerHTML = "Ваша очередь";
+      }
     };
     startBtn.addEventListener("click", newGame);
     return cardsContainer.addEventListener("click", function(e) {
@@ -220,11 +225,13 @@
               allCardsList[card1].dataset.open = false;
               allCardsList[card2].dataset.open = false;
               allCardsList[ind].dataset.open = false;
+              cardsContainer.classList.add("not-clickable");
               closeCards = setTimeout(function() {
                 allCardsList[card1].querySelector(".flip-container").classList.remove("animate");
                 allCardsList[card2].querySelector(".flip-container").classList.remove("animate");
                 allCardsList[card1].classList.add("closed-card");
-                return allCardsList[card2].classList.add("closed-card");
+                allCardsList[card2].classList.add("closed-card");
+                return cardsContainer.classList.remove("not-clickable");
               }, 700);
               if (mode === "botMode") {
                 if (playersTurn === true) {
@@ -250,8 +257,10 @@
               } else {
                 botsScore += 1;
               }
-              playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
-              botsScoreContainer.innerHTML = "Счёт бота: " + botsScore;
+              if (mode === "botMode") {
+                playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
+                botsScoreContainer.innerHTML = "Счёт бота: " + botsScore;
+              }
             }
           }
         }
@@ -261,7 +270,9 @@
           messageContainer.innerHTML = "Выиграл бот";
           return boo.play();
         } else if (playersScore > botsScore) {
-          messageContainer.innerHTML = "Вы выиграли";
+          if (mode === "botMode") {
+            messageContainer.innerHTML = "Вы выиграли";
+          }
           return yeah.play();
         } else {
           messageContainer.innerHTML = "Ничья!";

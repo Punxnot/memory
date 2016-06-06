@@ -50,6 +50,7 @@ createCards = ->
   newList = shuffle(list1.concat(list1.slice()))
   card = document.querySelector(".card")
   theme = chooseTheme.value
+  mode = document.querySelector(".choose-mode:checked").dataset.mode
   for i in newList
     cln = card.cloneNode(true)
     cln.dataset.number = i
@@ -77,9 +78,10 @@ startGame = ->
     i.style.animationDelay = "#{num * 0.1}s"
     num++
   allCardsList = Array.prototype.slice.call(allCards, 0)
-  messageContainer.innerHTML = "Ваша очередь"
-  playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
-  botsScoreContainer.innerHTML = "Счёт бота: " + botsScore
+  if mode == "botMode"
+    messageContainer.innerHTML = "Ваша очередь"
+    playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
+    botsScoreContainer.innerHTML = "Счёт бота: " + botsScore
 
   # Bot
   botPlay = ->
@@ -122,9 +124,10 @@ startGame = ->
     state = 0
     card1 = 33
     card2 = 33
-    playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
-    botsScoreContainer.innerHTML = "Счёт бота: " + botsScore
-    messageContainer.innerHTML = "Ваша очередь"
+    if mode == "botMode"
+      playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
+      botsScoreContainer.innerHTML = "Счёт бота: " + botsScore
+      messageContainer.innerHTML = "Ваша очередь"
 
   startBtn.addEventListener("click", newGame)
 
@@ -152,11 +155,13 @@ startGame = ->
             allCardsList[card1].dataset.open = false
             allCardsList[card2].dataset.open = false
             allCardsList[ind].dataset.open = false
+            cardsContainer.classList.add("not-clickable")
             closeCards = setTimeout(->
               allCardsList[card1].querySelector(".flip-container").classList.remove("animate")
               allCardsList[card2].querySelector(".flip-container").classList.remove("animate")
               allCardsList[card1].classList.add("closed-card")
               allCardsList[card2].classList.add("closed-card")
+              cardsContainer.classList.remove("not-clickable")
             , 700)
             if mode == "botMode"
               if playersTurn == true
@@ -178,14 +183,16 @@ startGame = ->
               playersScore += 1
             else
               botsScore += 1
-            playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
-            botsScoreContainer.innerHTML = "Счёт бота: " + botsScore
+            if mode == "botMode"
+              playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
+              botsScoreContainer.innerHTML = "Счёт бота: " + botsScore
     if (false not in exposed)
       if botsScore > playersScore
         messageContainer.innerHTML = "Выиграл бот"
         boo.play()
       else if playersScore > botsScore
-        messageContainer.innerHTML = "Вы выиграли"
+        if mode == "botMode"
+          messageContainer.innerHTML = "Вы выиграли"
         yeah.play()
       else
         messageContainer.innerHTML = "Ничья!"

@@ -24,7 +24,7 @@
           Memory
         </div>
         <div>
-          Выберите тему:
+          Тема:
           <select name="choose-theme" id="chooseTheme">
             <option value="programming">Программирование</option>
             <option value="cars">Автомобили</option>
@@ -37,7 +37,7 @@
         </div>
         <div>
           Режим игры:
-          <input class="choose-mode" type="radio" name="choose-mode" data-mode="botMode" id="botMode"><label for="botMode">Играть с ботом</label>
+          <input class="choose-mode" type="radio" name="choose-mode" data-mode="botMode" id="botMode"><label for="botMode">Играть против бота</label>
           <input class="choose-mode" type="radio" name="choose-mode" data-mode="singleMode" id="singleMode" checked><label for="singleMode">Играть самому</label>
           <div class="bot-type">
             Выберите бота:
@@ -47,7 +47,7 @@
           </div>
         </div>
 
-        <button id="playBtn">Start Game!</button>
+        <button id="playBtn">Играть!</button>
       </div>
       <div class="main-screen" id="mainScreen">
         <div class="text-container">
@@ -60,18 +60,10 @@
           <div class="message-container" id="messageContainer"></div>
           <div class="players-score" id="playersScore"></div>
           <div class="bots-score" id="botsScore"></div>
-          <button class="btn" type="button" name="button" id="startBtn">Начать заново</button>
+          <button class="btn" type="button" name="button" id="startBtn">Ещё раз</button>
+          <button onclick="location.reload()">Изменить настройки</button>
         </div>
         <div class="cards-container clearfix" id="cardsContainer"></div>
-        <!-- <div class="text-container cards-num">
-          <h4>Количество карточек</h4>
-          <label><input class="choose-num" type="radio" name="choose-cards-number" id="7" checked>16</label>
-          <label><input class="choose-num" type="radio" name="choose-cards-number" id="11">24</label>
-          <h4>Тип бота</h4>
-          <label><input class="choose-bot" type="radio" name="choose-bot" id="smart" checked>Умный</label>
-          <label><input class="choose-bot" type="radio" name="choose-bot" id="normal">Средний</label>
-          <label><input class="choose-bot" type="radio" name="choose-bot" id="stupid">Глупый</label>
-        </div> -->
       </div>
     </div>
 
