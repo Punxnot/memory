@@ -1,5 +1,5 @@
 (function() {
-  var blub, boo, botType, botsScore, botsScoreContainer, card1, card2, cardsContainer, cardsMaxNum, chooseBotRadios, chooseNumRadios, chooseThemeRadios, createCards, exposed, gameContainer, getRandom, j, list1, messageContainer, myInterval, newList, num, playersScore, playersScoreContainer, playersTurn, results, shuffle, startBtn, state, theme, yeah,
+  var blub, boo, botType, botsScore, botsScoreContainer, card1, card2, cardsContainer, cardsMaxNum, chooseBotRadios, chooseNumRadios, chooseThemeRadios, createCards, exposed, gameContainer, getRandom, j, list1, messageContainer, mode, myInterval, newList, num, playersScore, playersScoreContainer, playersTurn, results, shuffle, startBtn, state, theme, yeah,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   cardsMaxNum = 7;
@@ -55,6 +55,8 @@
   chooseNumRadios = document.querySelectorAll(".choose-num");
 
   chooseBotRadios = document.querySelectorAll(".choose-bot");
+
+  mode = "singleMode";
 
   shuffle = function(array) {
     var currentIndex, randomIndex, temporaryValue;
@@ -223,21 +225,23 @@
                 allCardsList[card1].classList.add("closed-card");
                 return allCardsList[card2].classList.add("closed-card");
               }, 700);
-              if (playersTurn === true) {
-                playersTurn = false;
-                cardsContainer.classList.add("not-clickable");
-                myInterval = setInterval(function() {
-                  if (!playersTurn) {
-                    return botPlay();
-                  }
-                }, 1000);
-              } else if (playersTurn === false) {
-                playersTurn = true;
-                cardsContainer.classList.remove("not-clickable");
-                clearInterval(myInterval);
-                showMessage = setTimeout(function() {
-                  return messageContainer.innerHTML = "Ваша очередь";
-                }, 500);
+              if (mode === "botMode") {
+                if (playersTurn === true) {
+                  playersTurn = false;
+                  cardsContainer.classList.add("not-clickable");
+                  myInterval = setInterval(function() {
+                    if (!playersTurn) {
+                      return botPlay();
+                    }
+                  }, 1000);
+                } else if (playersTurn === false) {
+                  playersTurn = true;
+                  cardsContainer.classList.remove("not-clickable");
+                  clearInterval(myInterval);
+                  showMessage = setTimeout(function() {
+                    return messageContainer.innerHTML = "Ваша очередь";
+                  }, 500);
+                }
               }
             } else {
               if (playersTurn) {

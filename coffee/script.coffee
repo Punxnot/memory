@@ -23,6 +23,7 @@ botType = "smart" # or normal, or stupid
 chooseThemeRadios = document.querySelectorAll(".choose-theme .theme-radio")
 chooseNumRadios = document.querySelectorAll(".choose-num")
 chooseBotRadios = document.querySelectorAll(".choose-bot")
+mode = "singleMode" # "botMode" or "singleMode"
 
 shuffle = (array) ->
   currentIndex = array.length
@@ -159,20 +160,21 @@ window.onload = ->
               allCardsList[card1].classList.add("closed-card")
               allCardsList[card2].classList.add("closed-card")
             , 700)
-            if playersTurn == true
-              playersTurn = false
-              cardsContainer.classList.add("not-clickable")
-              myInterval = setInterval(->
-                if !playersTurn
-                  botPlay()
-              , 1000)
-            else if playersTurn == false
-              playersTurn = true
-              cardsContainer.classList.remove("not-clickable")
-              clearInterval(myInterval)
-              showMessage = setTimeout(->
-                messageContainer.innerHTML = "Ваша очередь"
-              , 500)
+            if mode == "botMode"
+              if playersTurn == true
+                playersTurn = false
+                cardsContainer.classList.add("not-clickable")
+                myInterval = setInterval(->
+                  if !playersTurn
+                    botPlay()
+                , 1000)
+              else if playersTurn == false
+                playersTurn = true
+                cardsContainer.classList.remove("not-clickable")
+                clearInterval(myInterval)
+                showMessage = setTimeout(->
+                  messageContainer.innerHTML = "Ваша очередь"
+                , 500)
           else
             if playersTurn
               playersScore += 1
