@@ -40,6 +40,10 @@ h4 {
   margin-bottom: 20px;
 }
 
+label, input, select, button {
+  cursor: pointer;
+}
+
 .clearfix::after {
   content: '';
   display: table;
@@ -57,10 +61,11 @@ h4 {
 
 .game-container {
   text-align: center;
-  min-width: 900px;
+  min-width: 650px;
+  min-height: 400px;
 }
 .game-container.large {
-  min-width: 1100px;
+  min-width: 800px;
 }
 
 .cards-container {
@@ -102,6 +107,30 @@ h4 {
   margin-bottom: 10px;
 }
 
+.settings-screen {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+          transform: translateX(-50%);
+  width: 450px;
+  padding: 20px;
+  text-align: left;
+  color: #16829e;
+  font-size: 18px;
+  box-shadow: 0 0 20px 0 #16829e;
+}
+.settings-screen .logo {
+  text-align: center;
+}
+.settings-screen label {
+  font-size: 14px;
+}
+.settings-screen > div {
+  margin-bottom: 10px;
+}
+
 .text-container {
   display: inline-block;
   vertical-align: top;
@@ -111,14 +140,11 @@ h4 {
   font-size: 24px;
   color: #16829e;
 }
-.text-container.cards-num {
-  font-size: 18px;
-}
-.text-container.cards-num label {
+.text-container label {
   display: block;
   margin-bottom: 10px;
 }
-.text-container.cards-num label input {
+.text-container label input {
   margin-right: 10px;
   display: inline-block;
   vertical-align: top;
@@ -131,7 +157,7 @@ h4 {
   border: none;
   outline: none;
   display: inline-block;
-  margin-top: 20px;
+  margin-top: 10px;
   padding: 10px 20px;
   background-color: #16829e;
   color: white;
@@ -212,11 +238,19 @@ h4 {
   font-size: 14px;
 }
 
-.bot-type,
 .main-screen {
   display: none;
 }
 
+.bot-type {
+  margin-top: 10px;
+  text-align: center;
+  max-height: 0;
+  overflow: hidden;
+  -webkit-transition: max-height .2s;
+  transition: max-height .2s;
+}
+
 .choose-mode[data-mode="botMode"]:checked ~ .bot-type {
-  display: block;
+  max-height: 100px;
 }

@@ -231,7 +231,9 @@
                 allCardsList[card2].querySelector(".flip-container").classList.remove("animate");
                 allCardsList[card1].classList.add("closed-card");
                 allCardsList[card2].classList.add("closed-card");
-                return cardsContainer.classList.remove("not-clickable");
+                if (mode !== "botMode") {
+                  return cardsContainer.classList.remove("not-clickable");
+                }
               }, 700);
               if (mode === "botMode") {
                 if (playersTurn === true) {
@@ -244,11 +246,11 @@
                   }, 1000);
                 } else if (playersTurn === false) {
                   playersTurn = true;
-                  cardsContainer.classList.remove("not-clickable");
                   clearInterval(myInterval);
                   showMessage = setTimeout(function() {
-                    return messageContainer.innerHTML = "Ваша очередь";
-                  }, 500);
+                    messageContainer.innerHTML = "Ваша очередь";
+                    return cardsContainer.classList.remove("not-clickable");
+                  }, 700);
                 }
               }
             } else {

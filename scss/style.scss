@@ -29,6 +29,9 @@ ul, ol{
 h4 {
   margin-bottom: 20px;
 }
+label, input, select, button {
+  cursor: pointer;
+}
 .clearfix::after{
   content: '';
   display: table;
@@ -44,9 +47,10 @@ h4 {
 }
 .game-container{
   text-align: center;
-  min-width: 900px;
+  min-width: 650px;
+  min-height: 400px;
   &.large {
-    min-width: 1100px;
+    min-width: 800px;
   }
 }
 .cards-container{
@@ -81,7 +85,28 @@ h4 {
 .message-container{
   margin-bottom: 10px;
 }
-.text-container{
+.settings-screen {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 450px;
+  padding: 20px;
+  text-align: left;
+  color: #16829e;
+  font-size: 18px;
+  box-shadow: 0 0 20px 0 #16829e;
+  .logo {
+    text-align: center;
+  }
+  label {
+    font-size: 14px;
+  }
+  > div {
+    margin-bottom: 10px;
+  }
+}
+.text-container {
   display: inline-block;
   vertical-align: top;
   width: 250px;
@@ -89,16 +114,13 @@ h4 {
   text-align: center;
   font-size: 24px;
   color: #16829e;
-  &.cards-num {
-    font-size: 18px;
-    label {
-      display: block;
-      margin-bottom: 10px;
-      input {
-        margin-right: 10px;
-        display: inline-block;
-        vertical-align: top;
-      }
+  label {
+    display: block;
+    margin-bottom: 10px;
+    input {
+      margin-right: 10px;
+      display: inline-block;
+      vertical-align: top;
     }
   }
   p{
@@ -109,7 +131,7 @@ h4 {
   border: none;
   outline: none;
   display: inline-block;
-  margin-top: 20px;
+  margin-top: 10px;
   padding: 10px 20px;
   background-color: #16829e;
   color: white;
@@ -172,10 +194,16 @@ h4 {
     font-size: 14px;
   }
 }
-.bot-type,
 .main-screen {
   display: none;
 }
+.bot-type {
+  margin-top: 10px;
+  text-align: center;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .2s;
+}
 .choose-mode[data-mode="botMode"]:checked ~ .bot-type {
-  display: block;
+  max-height: 100px;
 }

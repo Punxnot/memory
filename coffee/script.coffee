@@ -161,7 +161,8 @@ startGame = ->
               allCardsList[card2].querySelector(".flip-container").classList.remove("animate")
               allCardsList[card1].classList.add("closed-card")
               allCardsList[card2].classList.add("closed-card")
-              cardsContainer.classList.remove("not-clickable")
+              if mode != "botMode"
+                cardsContainer.classList.remove("not-clickable")
             , 700)
             if mode == "botMode"
               if playersTurn == true
@@ -173,11 +174,11 @@ startGame = ->
                 , 1000)
               else if playersTurn == false
                 playersTurn = true
-                cardsContainer.classList.remove("not-clickable")
                 clearInterval(myInterval)
                 showMessage = setTimeout(->
                   messageContainer.innerHTML = "Ваша очередь"
-                , 500)
+                  cardsContainer.classList.remove("not-clickable")
+                , 700)
           else
             if playersTurn
               playersScore += 1

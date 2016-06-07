@@ -40,14 +40,14 @@
           <input class="choose-mode" type="radio" name="choose-mode" data-mode="botMode" id="botMode"><label for="botMode">Играть против бота</label>
           <input class="choose-mode" type="radio" name="choose-mode" data-mode="singleMode" id="singleMode" checked><label for="singleMode">Играть самому</label>
           <div class="bot-type">
-            Выберите бота:
+            Выберите бота:<br>
             <label><input class="choose-bot" type="radio" name="choose-bot" data-bottype="smart">Умный</label>
             <label><input class="choose-bot" type="radio" name="choose-bot" data-bottype="normal" checked>Средний</label>
             <label><input class="choose-bot" type="radio" name="choose-bot" data-bottype="stupid">Глупый</label>
           </div>
         </div>
 
-        <button id="playBtn">Играть!</button>
+        <button type="button" class="btn" id="playBtn">Играть</button>
       </div>
       <div class="main-screen" id="mainScreen">
         <div class="text-container">
@@ -61,7 +61,7 @@
           <div class="players-score" id="playersScore"></div>
           <div class="bots-score" id="botsScore"></div>
           <button class="btn" type="button" name="button" id="startBtn">Ещё раз</button>
-          <button onclick="location.reload()">Изменить настройки</button>
+          <button class="btn" onclick="location.reload()">Настройки</button>
         </div>
         <div class="cards-container clearfix" id="cardsContainer"></div>
       </div>
