@@ -108,6 +108,32 @@ label, input, select, button {
 }
 
 .settings-screen {
+  min-height: 100vh;
+  padding-top: 40px;
+  background: #16829e;
+}
+.settings-screen .logo {
+  text-align: center;
+  color: white;
+}
+.settings-screen label {
+  font-size: 14px;
+}
+.settings-screen .btn {
+  background: white;
+  color: #16829e;
+}
+.settings-screen .btn:hover {
+  background: white;
+  -webkit-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+          transform: scale(1.1);
+  -webkit-transition: -webkit-transform .2s;
+  transition: -webkit-transform .2s;
+  transition: transform .2s;
+  transition: transform .2s, -webkit-transform .2s;
+}
+.settings-screen .inner {
   position: absolute;
   top: 20%;
   left: 50%;
@@ -117,17 +143,11 @@ label, input, select, button {
   width: 450px;
   padding: 20px;
   text-align: left;
-  color: #16829e;
+  color: white;
   font-size: 18px;
-  box-shadow: 0 0 20px 0 #16829e;
+  border: 2px solid white;
 }
-.settings-screen .logo {
-  text-align: center;
-}
-.settings-screen label {
-  font-size: 14px;
-}
-.settings-screen > div {
+.settings-screen .inner > div {
   margin-bottom: 10px;
 }
 
@@ -244,7 +264,6 @@ label, input, select, button {
 
 .bot-type {
   margin-top: 10px;
-  text-align: center;
   max-height: 0;
   overflow: hidden;
   -webkit-transition: max-height .2s;

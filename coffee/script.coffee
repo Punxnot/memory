@@ -16,15 +16,17 @@ boo = new Audio('audio/boo.wav')
 playersTurn = true
 playersScore = 0
 botsScore = 0
+turns = 0
 myInterval = null
 num = 0
-botType = "smart" # or normal, or stupid
+botType = "smart" # smart, normal or stupid
 chooseTheme = document.getElementById("chooseTheme")
 theme = "programming"
 mode = "singleMode" # "botMode" or "singleMode"
 settingsScreen = document.getElementById("settingsScreen")
 mainScreen = document.getElementById("mainScreen")
 playBtn = document.getElementById("playBtn");
+
 playBtn.addEventListener("click", ->
   startGame()
 )
@@ -82,6 +84,8 @@ startGame = ->
     messageContainer.innerHTML = "Ваша очередь"
     playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
     botsScoreContainer.innerHTML = "Счёт бота: " + botsScore
+  else if mode == "singleMode"
+    playersScoreContainer.innerHTML = "Попыток: " + turns
 
   # Bot
   botPlay = ->
@@ -119,6 +123,7 @@ startGame = ->
     playersTurn = true
     playersScore = 0
     botsScore = 0
+    turns = 0
     clearInterval(myInterval)
     cardsContainer.classList.remove("not-clickable")
     state = 0
@@ -128,6 +133,8 @@ startGame = ->
       playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
       botsScoreContainer.innerHTML = "Счёт бота: " + botsScore
       messageContainer.innerHTML = "Ваша очередь"
+    else if mode == "singleMode"
+      playersScoreContainer.innerHTML = "Попыток: " + turns
 
   startBtn.addEventListener("click", newGame)
 
@@ -148,6 +155,9 @@ startGame = ->
         else if state == 1
           card2 = ind
           state = 0
+          if mode == "singleMode"
+            turns++
+            playersScoreContainer.innerHTML = "Попыток: " + turns
           if newList[card1] != newList[card2]
             exposed[card1] = false
             exposed[card2] = false
@@ -185,8 +195,8 @@ startGame = ->
             else
               botsScore += 1
             if mode == "botMode"
-              playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
               botsScoreContainer.innerHTML = "Счёт бота: " + botsScore
+              playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
     if (false not in exposed)
       if botsScore > playersScore
         messageContainer.innerHTML = "Выиграл бот"

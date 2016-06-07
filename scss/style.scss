@@ -86,24 +86,39 @@ label, input, select, button {
   margin-bottom: 10px;
 }
 .settings-screen {
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 450px;
-  padding: 20px;
-  text-align: left;
-  color: #16829e;
-  font-size: 18px;
-  box-shadow: 0 0 20px 0 #16829e;
+  min-height: 100vh;
+  padding-top: 40px;
+  background: #16829e;
   .logo {
     text-align: center;
+    color: white;
   }
   label {
     font-size: 14px;
   }
-  > div {
-    margin-bottom: 10px;
+  .btn {
+    background: white;
+    color: #16829e;
+    &:hover {
+      background: white;
+      transform: scale(1.1);
+      transition: transform .2s;
+    }
+  }
+  .inner {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 450px;
+    padding: 20px;
+    text-align: left;
+    color: white;
+    font-size: 18px;
+    border: 2px solid white;
+    > div {
+      margin-bottom: 10px;
+    }
   }
 }
 .text-container {
@@ -199,7 +214,6 @@ label, input, select, button {
 }
 .bot-type {
   margin-top: 10px;
-  text-align: center;
   max-height: 0;
   overflow: hidden;
   transition: max-height .2s;

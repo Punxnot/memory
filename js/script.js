@@ -1,5 +1,5 @@
 (function() {
-  var blub, boo, botType, botsScore, botsScoreContainer, card1, card2, cardsContainer, cardsMaxNum, chooseTheme, createCards, exposed, gameContainer, getRandom, j, list1, mainScreen, messageContainer, mode, myInterval, newList, num, playBtn, playersScore, playersScoreContainer, playersTurn, results, settingsScreen, shuffle, startBtn, startGame, state, theme, yeah,
+  var blub, boo, botType, botsScore, botsScoreContainer, card1, card2, cardsContainer, cardsMaxNum, chooseTheme, createCards, exposed, gameContainer, getRandom, j, list1, mainScreen, messageContainer, mode, myInterval, newList, num, playBtn, playersScore, playersScoreContainer, playersTurn, results, settingsScreen, shuffle, startBtn, startGame, state, theme, turns, yeah,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   cardsMaxNum = 7;
@@ -41,6 +41,8 @@
   playersScore = 0;
 
   botsScore = 0;
+
+  turns = 0;
 
   myInterval = null;
 
@@ -136,6 +138,8 @@
       messageContainer.innerHTML = "Ваша очередь";
       playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
       botsScoreContainer.innerHTML = "Счёт бота: " + botsScore;
+    } else if (mode === "singleMode") {
+      playersScoreContainer.innerHTML = "Попыток: " + turns;
     }
     botPlay = function() {
       var botNum, cardToClick, closedCards, closedCardsList, l, len1;
@@ -188,6 +192,7 @@
       playersTurn = true;
       playersScore = 0;
       botsScore = 0;
+      turns = 0;
       clearInterval(myInterval);
       cardsContainer.classList.remove("not-clickable");
       state = 0;
@@ -197,6 +202,8 @@
         playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
         botsScoreContainer.innerHTML = "Счёт бота: " + botsScore;
         return messageContainer.innerHTML = "Ваша очередь";
+      } else if (mode === "singleMode") {
+        return playersScoreContainer.innerHTML = "Попыток: " + turns;
       }
     };
     startBtn.addEventListener("click", newGame);
@@ -218,6 +225,10 @@
           } else if (state === 1) {
             card2 = ind;
             state = 0;
+            if (mode === "singleMode") {
+              turns++;
+              playersScoreContainer.innerHTML = "Попыток: " + turns;
+            }
             if (newList[card1] !== newList[card2]) {
               exposed[card1] = false;
               exposed[card2] = false;
@@ -260,8 +271,8 @@
                 botsScore += 1;
               }
               if (mode === "botMode") {
-                playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
                 botsScoreContainer.innerHTML = "Счёт бота: " + botsScore;
+                playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
               }
             }
           }
