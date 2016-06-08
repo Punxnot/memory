@@ -19,37 +19,6 @@
     </div>
 
     <div class="game-container" id="gameContainer">
-      <div class="settings-screen" id="settingsScreen">
-        <div class="logo">
-          Memory
-        </div>
-        <div class="inner">
-          <div>
-            Тема:
-            <select name="choose-theme" id="chooseTheme">
-              <option value="programming">Программирование</option>
-              <option value="cars">Автомобили</option>
-            </select>
-          </div>
-          <div>
-            Количество карточек:
-            <label><input class="choose-num" type="radio" name="choose-cards-number" data-cardsnum="7" checked>16</label>
-            <label><input class="choose-num" type="radio" name="choose-cards-number" data-cardsnum="11">24</label>
-          </div>
-          <div>
-            Режим игры:
-            <input class="choose-mode" type="radio" name="choose-mode" data-mode="botMode" id="botMode"><label for="botMode">Играть против бота</label>
-            <input class="choose-mode" type="radio" name="choose-mode" data-mode="singleMode" id="singleMode" checked><label for="singleMode">Играть самому</label>
-            <div class="bot-type">
-              Выберите бота:<br>
-              <label><input class="choose-bot" type="radio" name="choose-bot" data-bottype="smart">Умный</label>
-              <label><input class="choose-bot" type="radio" name="choose-bot" data-bottype="normal" checked>Средний</label>
-              <label><input class="choose-bot" type="radio" name="choose-bot" data-bottype="stupid">Глупый</label>
-            </div>
-          </div>
-          <button type="button" class="btn" id="playBtn">Играть</button>
-        </div>
-      </div>
       <div class="main-screen" id="mainScreen">
         <div class="text-container">
           <div class="logo">
@@ -61,8 +30,34 @@
           <div class="message-container" id="messageContainer"></div>
           <div class="players-score" id="playersScore"></div>
           <div class="bots-score" id="botsScore"></div>
-          <button class="btn" type="button" name="button" id="startBtn">Ещё раз</button>
-          <button class="btn" onclick="location.reload()">Настройки</button>
+          <button class="btn" type="button" name="button" id="startBtn">Начать заново</button>
+
+          <div class="settings" id="settings">
+            <div>
+              <h4 class="settings-item-title">Тема:</h4>
+              <select class="settings-item" name="choose-theme" id="chooseTheme">
+                <option value="programming">Программирование</option>
+                <option value="cars">Автомобили</option>
+              </select>
+            </div>
+            <div>
+              <h4 class="settings-item-title">Количество карточек:</h4>
+              <label><input class="choose-num settings-item" type="radio" name="choose-cards-number" data-cardsnum="7" checked>16</label>
+              <label><input class="choose-num settings-item" type="radio" name="choose-cards-number" data-cardsnum="11">24</label>
+            </div>
+            <div>
+              <h4 class="settings-item-title">Режим игры:</h4>
+              <input class="choose-mode settings-item" type="radio" name="choose-mode" data-mode="botMode" id="botMode"><label for="botMode">С ботом</label>
+              <input class="choose-mode settings-item" type="radio" name="choose-mode" data-mode="singleMode" id="singleMode" checked><label for="singleMode">Без бота</label>
+              <div class="bot-type">
+                <h4 class="settings-item-title">Выберите бота:</h4>
+                <label><input class="choose-bot settings-item" type="radio" name="choose-bot" data-bottype="smart">Умный</label>
+                <label><input class="choose-bot settings-item" type="radio" name="choose-bot" data-bottype="normal" checked>Средний</label>
+                <label><input class="choose-bot settings-item" type="radio" name="choose-bot" data-bottype="stupid">Глупый</label>
+              </div>
+            </div>
+          </div>
+
         </div>
         <div class="cards-container clearfix" id="cardsContainer"></div>
       </div>

@@ -26,9 +26,6 @@ ul, ol{
 *{
   box-sizing: border-box;
 }
-h4 {
-  margin-bottom: 20px;
-}
 label, input, select, button {
   cursor: pointer;
 }
@@ -85,39 +82,39 @@ label, input, select, button {
 .message-container{
   margin-bottom: 10px;
 }
-.settings-screen {
-  min-height: 100vh;
-  padding-top: 40px;
-  background: #16829e;
-  .logo {
-    text-align: center;
-    color: white;
-  }
-  label {
-    font-size: 14px;
-  }
-  .btn {
-    background: white;
-    color: #16829e;
-    &:hover {
-      background: white;
-      transform: scale(1.1);
-      transition: transform .2s;
+.settings {
+  margin: 20px 0;
+  font-size: 18px;
+  > div {
+    margin-bottom: 20px;
+    label {
+      display: inline;
+      font-size: 14px;
     }
   }
-  .inner {
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 450px;
-    padding: 20px;
-    text-align: left;
-    color: white;
+  .settings-item-title {
+    margin-bottom: 5px;
     font-size: 18px;
-    border: 2px solid white;
-    > div {
-      margin-bottom: 10px;
+    font-weight: normal;
+  }
+  select {
+    display: inline-block;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 10px 15px;
+    padding-right: 25px;
+    font-size: 14px;
+    background: #16829e url("http://match4shaadi.com/images/select-arrow.png") no-repeat 95% 50%;
+    background-size: 12px;
+    color: white;
+    border: none;
+    border-radius: 0;
+    &:focus {
+      outline: none;
+    }
+    &:hover{
+      background-color: lighten(#16829e, 10%);
     }
   }
 }
@@ -150,7 +147,7 @@ label, input, select, button {
   padding: 10px 20px;
   background-color: #16829e;
   color: white;
-  text-transform: uppercase;
+  font-size: 14px;
   cursor: pointer;
   &:hover{
     background-color: lighten(#16829e, 10%);
@@ -159,6 +156,7 @@ label, input, select, button {
 .players-score,
 .bots-score{
   font-size: 18px;
+  font-weight: bold;
 }
 
 .flip-container{
@@ -209,14 +207,11 @@ label, input, select, button {
     font-size: 14px;
   }
 }
-.main-screen {
-  display: none;
-}
 .bot-type {
-  margin-top: 10px;
+  margin-top: 20px;
   max-height: 0;
   overflow: hidden;
-  transition: max-height .2s;
+  transition: max-height .3s;
 }
 .choose-mode[data-mode="botMode"]:checked ~ .bot-type {
   max-height: 100px;

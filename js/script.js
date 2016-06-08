@@ -1,5 +1,5 @@
 (function() {
-  var blub, boo, botType, botsScore, botsScoreContainer, card1, card2, cardsContainer, cardsMaxNum, chooseTheme, createCards, exposed, gameContainer, getRandom, j, list1, mainScreen, messageContainer, mode, myInterval, newList, num, playBtn, playersScore, playersScoreContainer, playersTurn, results, settingsScreen, shuffle, startBtn, startGame, state, theme, turns, yeah,
+  var blub, boo, botType, botsScore, botsScoreContainer, card1, card2, cardsContainer, cardsMaxNum, chooseTheme, createCards, exposed, gameContainer, getRandom, j, list1, mainScreen, messageContainer, mode, myInterval, newList, num, playersScore, playersScoreContainer, playersTurn, results, settingsItems, shuffle, startBtn, state, theme, turns, yeah,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   cardsMaxNum = 7;
@@ -56,15 +56,9 @@
 
   mode = "singleMode";
 
-  settingsScreen = document.getElementById("settingsScreen");
-
   mainScreen = document.getElementById("mainScreen");
 
-  playBtn = document.getElementById("playBtn");
-
-  playBtn.addEventListener("click", function() {
-    return startGame();
-  });
+  settingsItems = document.querySelectorAll(".settings-item");
 
   shuffle = function(array) {
     var currentIndex, randomIndex, temporaryValue;
@@ -112,15 +106,13 @@
     return results2;
   };
 
-  startGame = function() {
-    var allCards, allCardsList, botPlay, i, k, len, newGame;
-    settingsScreen.style.display = "none";
-    mainScreen.style.display = "block";
+  window.onload = function() {
+    var allCards, allCardsList, botPlay, i, item, k, l, len, len1, newGame;
     cardsMaxNum = parseInt(document.querySelector(".choose-num:checked").dataset.cardsnum);
     if (cardsMaxNum === 7) {
-      gameContainer.classList.remove("large");
+      gameContainer["class"] = "game-container large";
     } else if (cardsMaxNum === 11) {
-      gameContainer.classList.add("large");
+      gameContainer["class"] = "game-container";
     }
     botType = document.querySelector(".choose-bot:checked").dataset.bottype;
     createCards();
@@ -183,6 +175,11 @@
       }).apply(this);
       newList = shuffle(list1.concat(list1.slice()));
       createCards();
+      if (cardsMaxNum === 7) {
+        gameContainer.className = "game-container";
+      } else if (cardsMaxNum === 11) {
+        gameContainer.className = "game-container large";
+      }
       allCards = cardsContainer.querySelectorAll(".card");
       for (m = 0, len1 = allCards.length; m < len1; m++) {
         i = allCards[m];
@@ -207,6 +204,10 @@
       }
     };
     startBtn.addEventListener("click", newGame);
+    for (l = 0, len1 = settingsItems.length; l < len1; l++) {
+      item = settingsItems[l];
+      item.addEventListener("change", newGame);
+    }
     return cardsContainer.addEventListener("click", function(e) {
       var card, closeCards, ind, showMessage;
       if (e.target.parentNode.parentNode.parentNode.classList.contains("card")) {

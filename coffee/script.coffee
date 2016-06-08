@@ -23,13 +23,8 @@ botType = "smart" # smart, normal or stupid
 chooseTheme = document.getElementById("chooseTheme")
 theme = "programming"
 mode = "singleMode" # "botMode" or "singleMode"
-settingsScreen = document.getElementById("settingsScreen")
 mainScreen = document.getElementById("mainScreen")
-playBtn = document.getElementById("playBtn");
-
-playBtn.addEventListener("click", ->
-  startGame()
-)
+settingsItems = document.querySelectorAll(".settings-item")
 
 shuffle = (array) ->
   currentIndex = array.length
@@ -61,15 +56,12 @@ createCards = ->
   for i in newList
     exposed.push(false)
 
-# window.onload = ->
-startGame = ->
-  settingsScreen.style.display = "none"
-  mainScreen.style.display = "block"
+window.onload = ->
   cardsMaxNum = parseInt(document.querySelector(".choose-num:checked").dataset.cardsnum)
   if cardsMaxNum == 7
-    gameContainer.classList.remove("large")
+    gameContainer.class = "game-container large"
   else if cardsMaxNum == 11
-    gameContainer.classList.add("large")
+    gameContainer.class = "game-container"
   botType = document.querySelector(".choose-bot:checked").dataset.bottype
   createCards()
   allCards = cardsContainer.querySelectorAll(".card")
@@ -116,6 +108,10 @@ startGame = ->
     list1 = [0..cardsMaxNum]
     newList = shuffle(list1.concat(list1.slice()))
     createCards()
+    if cardsMaxNum == 7
+      gameContainer.className = "game-container"
+    else if cardsMaxNum == 11
+      gameContainer.className = "game-container large"
     allCards = cardsContainer.querySelectorAll(".card")
     for i in allCards
       i.classList.add("closed-card")
@@ -137,6 +133,8 @@ startGame = ->
       playersScoreContainer.innerHTML = "Попыток: " + turns
 
   startBtn.addEventListener("click", newGame)
+  for item in settingsItems
+    item.addEventListener("change", newGame)
 
   cardsContainer.addEventListener("click", (e)->
     if e.target.parentNode.parentNode.parentNode.classList.contains("card")
