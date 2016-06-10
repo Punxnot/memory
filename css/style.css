@@ -61,7 +61,7 @@ label, input, select, button {
   min-height: 400px;
 }
 .game-container.large {
-  min-width: 800px;
+  min-width: 830px;
 }
 
 .cards-container {
@@ -108,11 +108,7 @@ label, input, select, button {
   font-size: 18px;
 }
 .settings > div {
-  margin-bottom: 20px;
-}
-.settings > div label {
-  display: inline;
-  font-size: 14px;
+  margin-bottom: 15px;
 }
 .settings .settings-item-title {
   margin-bottom: 5px;
@@ -143,7 +139,7 @@ label, input, select, button {
 .text-container {
   display: inline-block;
   vertical-align: top;
-  width: 250px;
+  width: 280px;
   padding: 20px;
   text-align: center;
   font-size: 24px;
@@ -157,6 +153,9 @@ label, input, select, button {
   margin-right: 10px;
   display: inline-block;
   vertical-align: top;
+}
+.text-container input + label {
+  display: inline-block;
 }
 .text-container p {
   font-size: 14px;
@@ -239,7 +238,7 @@ label, input, select, button {
 }
 
 .choose-theme {
-  margin-top: 20px;
+  margin-top: 10px;
   font-size: 18px;
 }
 .choose-theme label {
@@ -249,13 +248,35 @@ label, input, select, button {
 }
 
 .bot-type {
-  margin-top: 20px;
+  margin-top: 10px;
   max-height: 0;
   overflow: hidden;
   -webkit-transition: max-height .3s;
   transition: max-height .3s;
 }
+.bot-type label {
+  display: inline-block;
+  font-size: 14px;
+}
 
 .choose-mode[data-mode="botMode"]:checked ~ .bot-type {
-  max-height: 100px;
+  max-height: 200px;
+}
+
+.choose-num {
+  font-size: 34px;
+  font-family: Cake, "Comic Sans MS", sans-serif;
+}
+
+.custom-input {
+  display: none;
+}
+
+.custom-input + label {
+  display: inline-block;
+  padding: 5px 10px;
+}
+
+.custom-input:checked + label {
+  background-color: #bdeaf6;
 }

@@ -201,7 +201,8 @@
         return messageContainer.innerHTML = "Ваша очередь";
       } else if (mode === "singleMode") {
         playersScoreContainer.innerHTML = "Попыток: " + turns;
-        return botsScoreContainer.innerHTML = "";
+        botsScoreContainer.innerHTML = "";
+        return messageContainer.innerHTML = "";
       }
     };
     startBtn.addEventListener("click", newGame);

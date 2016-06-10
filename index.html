@@ -42,18 +42,18 @@
             </div>
             <div>
               <h4 class="settings-item-title">Количество карточек:</h4>
-              <label><input class="choose-num settings-item" type="radio" name="choose-cards-number" data-cardsnum="7" checked>16</label>
-              <label><input class="choose-num settings-item" type="radio" name="choose-cards-number" data-cardsnum="11">24</label>
+              <input class="custom-input choose-num settings-item" id="num7" type="radio" name="choose-cards-number" data-cardsnum="7" checked><label for="num7">16</label>
+              <input class="custom-input choose-num settings-item" id="num11" type="radio" name="choose-cards-number" data-cardsnum="11"><label for="num11">24</label>
             </div>
             <div>
               <h4 class="settings-item-title">Режим игры:</h4>
-              <input class="choose-mode settings-item" type="radio" name="choose-mode" data-mode="botMode" id="botMode"><label for="botMode">С ботом</label>
-              <input class="choose-mode settings-item" type="radio" name="choose-mode" data-mode="singleMode" id="singleMode" checked><label for="singleMode">Без бота</label>
+              <input class="custom-input choose-mode settings-item" type="radio" name="choose-mode" data-mode="botMode" id="botMode"><label for="botMode">С ботом</label>
+              <input class="custom-input choose-mode settings-item" type="radio" name="choose-mode" data-mode="singleMode" id="singleMode" checked><label for="singleMode">Без бота</label>
               <div class="bot-type">
                 <h4 class="settings-item-title">Выберите бота:</h4>
-                <label><input class="choose-bot settings-item" type="radio" name="choose-bot" data-bottype="smart">Умный</label>
-                <label><input class="choose-bot settings-item" type="radio" name="choose-bot" data-bottype="normal" checked>Средний</label>
-                <label><input class="choose-bot settings-item" type="radio" name="choose-bot" data-bottype="stupid">Глупый</label>
+                <input class="custom-input choose-bot settings-item" id="smartBot" type="radio" name="choose-bot" data-bottype="smart"><label for="smartBot">Умный</label>
+                <input class="custom-input choose-bot settings-item" id="normBot" type="radio" name="choose-bot" data-bottype="normal" checked><label for="normBot">Средний</label>
+                <input class="custom-input choose-bot settings-item" id="foolBot" type="radio" name="choose-bot" data-bottype="stupid"><label for="foolBot">Глупый</label>
               </div>
             </div>
           </div>
