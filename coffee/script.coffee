@@ -131,6 +131,7 @@ window.onload = ->
       messageContainer.innerHTML = "Ваша очередь"
     else if mode == "singleMode"
       playersScoreContainer.innerHTML = "Попыток: " + turns
+      botsScoreContainer.innerHTML = ""
 
   startBtn.addEventListener("click", newGame)
   for item in settingsItems

@@ -200,7 +200,8 @@
         botsScoreContainer.innerHTML = "Счёт бота: " + botsScore;
         return messageContainer.innerHTML = "Ваша очередь";
       } else if (mode === "singleMode") {
-        return playersScoreContainer.innerHTML = "Попыток: " + turns;
+        playersScoreContainer.innerHTML = "Попыток: " + turns;
+        return botsScoreContainer.innerHTML = "";
       }
     };
     startBtn.addEventListener("click", newGame);
