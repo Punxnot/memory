@@ -207,6 +207,10 @@ window.onload = ->
                 when "4" then playersScore += 100
                 else playersScore += 50
             playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
+            playersScoreContainer.classList.add("score-animated")
+            setTimeout(->
+              playersScoreContainer.classList.remove("score-animated")
+            , 500)
     if (false not in exposed)
       if botsScore > playersScore
         messageContainer.innerHTML = "Выиграл бот"

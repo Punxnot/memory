@@ -18,6 +18,40 @@
     opacity: 1;
   }
 }
+@-webkit-keyframes scorePulse {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+    opacity: 0.5;
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes scorePulse {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+    opacity: 0.5;
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1;
+  }
+}
 body,
 h1,
 h2,
@@ -279,4 +313,9 @@ label, input, select, button {
 
 .custom-input:checked + label {
   background-color: #bdeaf6;
+}
+
+.score-animated {
+  -webkit-animation: scorePulse .5s forwards;
+          animation: scorePulse .5s forwards;
 }

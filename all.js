@@ -297,6 +297,10 @@
                 }
               }
               playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
+              playersScoreContainer.classList.add("score-animated");
+              setTimeout(function() {
+                return playersScoreContainer.classList.remove("score-animated");
+              }, 500);
             }
           }
         }

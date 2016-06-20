@@ -11,6 +11,12 @@ $cardHeight: 124px;
   100% { opacity: 1; }
 }
 
+@keyframes scorePulse {
+  0%   { transform: scale(1); opacity: 1; }
+  50%  { transform: scale(1.2); opacity: 0.5; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
 body,
 h1,
 h2,
@@ -232,4 +238,8 @@ label, input, select, button {
 }
 .custom-input:checked + label {
   background-color: lighten(#16829e, 50%);
+}
+
+.score-animated {
+  animation: scorePulse .5s forwards;
 }
