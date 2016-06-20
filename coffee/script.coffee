@@ -74,10 +74,8 @@ window.onload = ->
   allCardsList = Array.prototype.slice.call(allCards, 0)
   if mode == "botMode"
     messageContainer.innerHTML = "Ваша очередь"
-    playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
     botsScoreContainer.innerHTML = "Счёт бота: " + botsScore
-  else if mode == "singleMode"
-    playersScoreContainer.innerHTML = "Попыток: " + turns
+  playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
 
   # Bot
   botPlay = ->
@@ -126,13 +124,12 @@ window.onload = ->
     card1 = 33
     card2 = 33
     if mode == "botMode"
-      playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
       botsScoreContainer.innerHTML = "Счёт бота: " + botsScore
       messageContainer.innerHTML = "Ваша очередь"
     else if mode == "singleMode"
-      playersScoreContainer.innerHTML = "Попыток: " + turns
       botsScoreContainer.innerHTML = ""
       messageContainer.innerHTML = ""
+    playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
 
   startBtn.addEventListener("click", newGame)
   for item in settingsItems
@@ -156,8 +153,7 @@ window.onload = ->
           card2 = ind
           state = 0
           if mode == "singleMode"
-            turns++
-            playersScoreContainer.innerHTML = "Попыток: " + turns
+            playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
           if newList[card1] != newList[card2]
             exposed[card1] = false
             exposed[card2] = false
@@ -190,13 +186,27 @@ window.onload = ->
                   cardsContainer.classList.remove("not-clickable")
                 , 700)
           else
-            if playersTurn
-              playersScore += 1
-            else
-              botsScore += 1
             if mode == "botMode"
+              if playersTurn
+                playersScore += 1
+                console.log playersScore
+              else
+                botsScore += 1
               botsScoreContainer.innerHTML = "Счёт бота: " + botsScore
-              playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
+            else if mode == "singleMode"
+              switch allCardsList[card2].dataset.times
+                when "1"
+                  if false not in exposed
+                    playersScore += 100
+                    console.log "Last one doesn't count"
+                  else
+                    playersScore += 500
+                    console.log "Bingo!"
+                when "2" then playersScore += 300
+                when "3" then playersScore += 200
+                when "4" then playersScore += 100
+                else playersScore += 50
+            playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore
     if (false not in exposed)
       if botsScore > playersScore
         messageContainer.innerHTML = "Выиграл бот"

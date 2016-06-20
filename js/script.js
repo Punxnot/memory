@@ -128,11 +128,9 @@
     allCardsList = Array.prototype.slice.call(allCards, 0);
     if (mode === "botMode") {
       messageContainer.innerHTML = "Ваша очередь";
-      playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
       botsScoreContainer.innerHTML = "Счёт бота: " + botsScore;
-    } else if (mode === "singleMode") {
-      playersScoreContainer.innerHTML = "Попыток: " + turns;
     }
+    playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
     botPlay = function() {
       var botNum, cardToClick, closedCards, closedCardsList, l, len1;
       closedCards = document.querySelectorAll(".closed-card");
@@ -196,14 +194,13 @@
       card1 = 33;
       card2 = 33;
       if (mode === "botMode") {
-        playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
         botsScoreContainer.innerHTML = "Счёт бота: " + botsScore;
-        return messageContainer.innerHTML = "Ваша очередь";
+        messageContainer.innerHTML = "Ваша очередь";
       } else if (mode === "singleMode") {
-        playersScoreContainer.innerHTML = "Попыток: " + turns;
         botsScoreContainer.innerHTML = "";
-        return messageContainer.innerHTML = "";
+        messageContainer.innerHTML = "";
       }
+      return playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
     };
     startBtn.addEventListener("click", newGame);
     for (l = 0, len1 = settingsItems.length; l < len1; l++) {
@@ -229,8 +226,7 @@
             card2 = ind;
             state = 0;
             if (mode === "singleMode") {
-              turns++;
-              playersScoreContainer.innerHTML = "Попыток: " + turns;
+              playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
             }
             if (newList[card1] !== newList[card2]) {
               exposed[card1] = false;
@@ -268,15 +264,39 @@
                 }
               }
             } else {
-              if (playersTurn) {
-                playersScore += 1;
-              } else {
-                botsScore += 1;
-              }
               if (mode === "botMode") {
+                if (playersTurn) {
+                  playersScore += 1;
+                  console.log(playersScore);
+                } else {
+                  botsScore += 1;
+                }
                 botsScoreContainer.innerHTML = "Счёт бота: " + botsScore;
-                playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
+              } else if (mode === "singleMode") {
+                switch (allCardsList[card2].dataset.times) {
+                  case "1":
+                    if (indexOf.call(exposed, false) < 0) {
+                      playersScore += 100;
+                      console.log("Last one doesn't count");
+                    } else {
+                      playersScore += 500;
+                      console.log("Bingo!");
+                    }
+                    break;
+                  case "2":
+                    playersScore += 300;
+                    break;
+                  case "3":
+                    playersScore += 200;
+                    break;
+                  case "4":
+                    playersScore += 100;
+                    break;
+                  default:
+                    playersScore += 50;
+                }
               }
+              playersScoreContainer.innerHTML = "Ваш счёт: " + playersScore;
             }
           }
         }
